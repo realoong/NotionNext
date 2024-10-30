@@ -60,7 +60,7 @@ const CONFIG = {
   HEO_GROUP_ICONS: [
     {
       title_1: '100',
-      img_1: '/images/heo/100.webp',
+      img_1: '/images/heo/hxcr.png',
       color_1: '#989bf8',
       title_2: '111',
       img_2: '/images/heo/111.webp',
