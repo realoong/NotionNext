@@ -4,12 +4,12 @@ const CONFIG = {
 
   HEO_HOME_BANNER_ENABLE: true,
 
-  HEO_SITE_CREATE_TIME: '2021-09-21', // 建站日期，用于计算网站运行的第几天
+  HEO_SITE_CREATE_TIME: '2024-10-24', // 建站日期，用于计算网站运行的第几天
 
   // 首页顶部通知条滚动内容，如不需要可以留空 []
   HEO_NOTICE_BAR: [
     { title: '欢迎来到我的博客', url: 'https://www.loonge.top' },
-    { title: '访问文档中心获取更多帮助', url: 'https://www.loonge.top' }
+   // { title: '访问文档中心获取更多帮助', url: 'https://www.loonge.top' }
   ],
 
   // 英雄区左右侧组件颠倒位置
@@ -21,8 +21,8 @@ const CONFIG = {
   HEO_HERO_TITLE_1: '终身学习',
   HEO_HERO_TITLE_2: '持续精进',
   HEO_HERO_TITLE_3: 'LOONGE.TOP',
-  HEO_HERO_TITLE_4: '人生精进系统',
-  HEO_HERO_TITLE_5: '一件未来20年都受益匪浅的事',
+  HEO_HERO_TITLE_4: '初心不改',
+  HEO_HERO_TITLE_5: '人生精进系统个人播客',
   HEO_HERO_TITLE_LINK: 'https://www.loonge.top/article/RefinementSystem',
   // 英雄区遮罩文字
   HEO_HERO_COVER_TITLE: '随便逛逛',
