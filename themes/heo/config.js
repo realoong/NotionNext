@@ -59,45 +59,61 @@ const CONFIG = {
   // 用户技能图标
   HEO_GROUP_ICONS: [
     {
-      title_1: '100',
-      img_1: '/images/heo/hxcr.png',
+      title_1: 'boy1',
+      img_1: '/images/heo/boy1.webp',
       color_1: '#989bf8',
-      title_2: '111',
-      img_2: '/images/heo/111.webp',
+      title_2: 'girl1',
+      img_2: '/images/heo/girl1.webp',
       color_2: '#ffffff'
     },
     {
-      title_1: '333',
-      img_1: '/images/heo/333.webp',
+      title_1: 'boy2',
+      img_1: '/images/heo/boy2.webp',
       color_1: '#57b6e6',
-      title_2: '444',
-      img_2: '/images/heo/444.webp',
+      title_2: 'girl2',
+      img_2: '/images/heo/girl2.webp',
       color_2: '#4082c3'
     },
     {
-      title_1: '555',
-      img_1: '/images/heo/555.webp',
+      title_1: 'boy3',
+      img_1: '/images/heo/boy3.webp',
       color_1: '#ffffff',
-      title_2: '666',
-      img_2: '/images/heo/666.webp',
+      title_2: 'girl3',
+      img_2: '/images/heo/girl3.webp',
       color_2: '#ffffff'
     },
     {
-      title_1: '777',
-      img_1: '/images/heo/777.webp',
+      title_1: 'boy4',
+      img_1: '/images/heo/boy4.webp',
       color_1: '#eb6840',
-      title_2: '888',
-      img_2: '/images/heo/888.webp',
+      title_2: 'girl4',
+      img_2: '/images/heo/girl4.webp',
       color_2: '#8f55ba'
     },
     {
-      title_1: '999',
-      img_1: '/images/heo/999.webp',
+      title_1: 'boy5',
+      img_1: '/images/heo/boy5.webp',
       color_1: '#f29e39',
-      title_2: '222',
-      img_2: '/images/heo/222.webp',
+      title_2: 'girl5',
+      img_2: '/images/heo/girl5.webp',
       color_2: '#2c51db'
-    }
+    },
+    {
+      title_1: 'boy6',
+      img_1: '/images/heo/boy6.webp',
+      color_1: '#eb6840',
+      title_2: 'girl6',
+      img_2: '/images/heo/girl6.webp',
+      color_2: '#8f55ba'
+    },
+    {
+      title_1: 'boy7',
+      img_1: '/images/heo/boy7.webp',
+      color_1: '#f29e39',
+      title_2: 'girl7',
+      img_2: '/images/heo/girl7.webp',
+      color_2: '#2c51db'
+    }    
   ],
 
   HEO_SOCIAL_CARD: true, // 是否显示右侧，点击加入社群按钮
