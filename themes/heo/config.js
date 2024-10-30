@@ -61,7 +61,7 @@ const CONFIG = {
     {
       title_1: 'boy1',
       img_1: '/images/heo/boy1.webp',
-      color_1: '#989bf8',
+      color_1: '#ffffff',
       title_2: 'girl1',
       img_2: '/images/heo/girl1.webp',
       color_2: '#ffffff'
@@ -69,10 +69,10 @@ const CONFIG = {
     {
       title_1: 'boy2',
       img_1: '/images/heo/boy2.webp',
-      color_1: '#57b6e6',
+      color_1: '#ffffff',
       title_2: 'girl2',
       img_2: '/images/heo/girl2.webp',
-      color_2: '#4082c3'
+      color_2: '#ffffff'
     },
     {
       title_1: 'boy3',
@@ -85,34 +85,34 @@ const CONFIG = {
     {
       title_1: 'boy4',
       img_1: '/images/heo/boy4.webp',
-      color_1: '#eb6840',
+      color_1: '#ffffff',
       title_2: 'girl4',
       img_2: '/images/heo/girl4.webp',
-      color_2: '#8f55ba'
+      color_2: '#ffffff'
     },
     {
       title_1: 'boy5',
       img_1: '/images/heo/boy5.webp',
-      color_1: '#f29e39',
+      color_1: '#ffffff',
       title_2: 'girl5',
       img_2: '/images/heo/girl5.webp',
-      color_2: '#2c51db'
+      color_2: '#ffffff'
     },
     {
       title_1: 'boy6',
       img_1: '/images/heo/boy6.webp',
-      color_1: '#eb6840',
+      color_1: '#ffffff',
       title_2: 'girl6',
       img_2: '/images/heo/girl6.webp',
-      color_2: '#8f55ba'
+      color_2: '#ffffff'
     },
     {
       title_1: 'boy7',
       img_1: '/images/heo/boy7.webp',
-      color_1: '#f29e39',
+      color_1: '#ffffff',
       title_2: 'girl7',
       img_2: '/images/heo/girl7.webp',
-      color_2: '#2c51db'
+      color_2: '#ffffff'
     }    
   ],
 
