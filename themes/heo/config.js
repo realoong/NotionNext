@@ -28,9 +28,9 @@ const CONFIG = {
   HEO_HERO_COVER_TITLE: '随便逛逛',
 
   // 英雄区显示三个置顶分类
-  HEO_HERO_CATEGORY_1: { title: '身心健康', url: '/tag/身心健康' },
-  HEO_HERO_CATEGORY_2: { title: '财富积累', url: '/tag/财富积累' },
-  HEO_HERO_CATEGORY_3: { title: '社交艺术', url: '/tag/社交艺术' },
+  HEO_HERO_CATEGORY_1: { title: '身心健康', url: '/category/身心健康' },
+  HEO_HERO_CATEGORY_2: { title: '财富积累', url: '/category/财富积累' },
+  HEO_HERO_CATEGORY_3: { title: '社交艺术', url: '/category/社交艺术' },
 
   // 英雄区右侧推荐文章标签, 例如 [推荐] , 最多六篇文章; 若留空白''，则推荐最近更新文章
   HEO_HERO_RECOMMEND_POST_TAG: '推荐',
@@ -120,7 +120,7 @@ const CONFIG = {
   HEO_SOCIAL_CARD_TITLE_1: '交流频道',
   HEO_SOCIAL_CARD_TITLE_2: '加入我们的社群讨论分享',
   HEO_SOCIAL_CARD_TITLE_3: '点击加入社群',
-  HEO_SOCIAL_CARD_URL: 'https://www.loonge.top',
+  HEO_SOCIAL_CARD_URL: 'https://www.loonge.top/about',
 
   // *****  以下配置无效，只是预留开发 ****
   // 菜单配置
