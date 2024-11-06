@@ -22,7 +22,7 @@ const CONFIG = {
   HEO_HERO_TITLE_2: '持续精进',
   HEO_HERO_TITLE_3: 'LOONGE.TOP',
   HEO_HERO_TITLE_4: '初心不改',
-  HEO_HERO_TITLE_5: '人生精进系统个人播客',
+  HEO_HERO_TITLE_5: '欢迎来到人生精进系统的资源库',
   HEO_HERO_TITLE_LINK: 'https://www.loonge.top/article/RefinementSystem',
   // 英雄区遮罩文字
   HEO_HERO_COVER_TITLE: '随便逛逛',
