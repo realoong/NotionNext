@@ -8,7 +8,7 @@ const CONFIG = {
 
   // 首页顶部通知条滚动内容，如不需要可以留空 []
   HEO_NOTICE_BAR: [
-    { title: '欢迎来到精进系统', url: 'https://www.loonge.top' },
+    { title: '欢迎来到人生精进系统，点击进入导航页', url: 'https://www.loonge.toparticle/navigation' },
    // { title: '访问文档中心获取更多帮助', url: 'https://www.loonge.top' }
   ],
 
@@ -22,8 +22,8 @@ const CONFIG = {
   HEO_HERO_TITLE_2: '持续精进',
   HEO_HERO_TITLE_3: 'LOONGE.TOP',
   HEO_HERO_TITLE_4: '初心不改',
-  HEO_HERO_TITLE_5: '欢迎来到人生精进系统的资源库',
-  HEO_HERO_TITLE_LINK: 'https://www.loonge.top/article/RefinementSystem',
+  HEO_HERO_TITLE_5: '人生精进系统架构总览',
+  HEO_HERO_TITLE_LINK: 'https://www.loonge.top/article/architecture',
   // 英雄区遮罩文字
   HEO_HERO_COVER_TITLE: '随便逛逛',
 
