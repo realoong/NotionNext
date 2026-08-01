@@ -815,12 +815,17 @@ export const Style = () => (
       .loonge-mobile-nav {
         display: grid;
         grid-template-rows: repeat(6, 0fr);
+        max-height: 0;
         overflow: hidden;
+        opacity: 0;
         padding-inline: 16px;
         background: #fff;
+        pointer-events: none;
         transition:
-          grid-template-rows 220ms ease,
+          max-height 220ms ease,
+          opacity 220ms ease,
           padding 220ms ease;
+        visibility: hidden;
       }
 
       .dark .loonge-mobile-nav {
@@ -834,8 +839,12 @@ export const Style = () => (
 
       .loonge-mobile-nav.open {
         grid-template-rows: repeat(6, 1fr);
+        max-height: 400px;
+        opacity: 1;
         padding-block: 8px 18px;
         border-bottom: 1px solid var(--loonge-line);
+        pointer-events: auto;
+        visibility: visible;
       }
 
       .dark .loonge-mobile-nav.open {
