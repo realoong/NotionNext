@@ -235,7 +235,7 @@ export default function HomePage(props) {
               priority
               src={siteConfig(
                 'LOONGE_HERO_IMAGE',
-                '/images/loonge-hero.png',
+                '/images/loonge-hero-white-shirt.png',
                 CONFIG
               )}
               alt='龙哥'
