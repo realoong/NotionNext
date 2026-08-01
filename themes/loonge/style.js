@@ -34,7 +34,7 @@ export const Style = () => (
 
     #theme-loonge .container,
     #theme-loonge .loonge-container {
-      width: min(100% - 40px, 1320px);
+      width: min(100% - 40px, 1600px);
       margin-inline: auto;
     }
 
@@ -232,7 +232,9 @@ export const Style = () => (
 
     .loonge-portrait-frame {
       position: relative;
-      min-height: 490px;
+      /* Keep the hero card proportional as the desktop viewport grows. */
+      min-height: 0;
+      aspect-ratio: 1.14 / 1;
       display: flex;
       align-items: flex-end;
       justify-content: center;
@@ -260,7 +262,9 @@ export const Style = () => (
       /* Let the portrait nearly span the card, while keeping a slim edge of
        * the pale blue frame visible around it. */
       width: calc(100% - 28px);
-      height: calc(100% - 56px);
+      /* Let the source ratio determine the photo height; the frame controls
+       * the overall hero proportions. */
+      height: auto;
       max-height: none;
       margin: 28px 14px 0;
       object-fit: cover;
@@ -748,7 +752,8 @@ export const Style = () => (
       }
 
       .loonge-portrait-frame {
-        min-height: 420px;
+        min-height: 0;
+        aspect-ratio: 1.14 / 1;
       }
 
       .loonge-directions-grid {
@@ -878,6 +883,7 @@ export const Style = () => (
 
       .loonge-portrait-frame {
         min-height: 390px;
+        aspect-ratio: auto;
         border-radius: 12px 12px 0 0;
       }
 
