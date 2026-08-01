@@ -1,6 +1,5 @@
 import { useGlobal } from '@/lib/global'
-import throttle from 'lodash.throttle'
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import CategoryGroup from './CategoryGroup'
 import Collapse from '@/components/Collapse'
@@ -13,8 +12,6 @@ import { siteConfig } from '@/lib/config'
 import { useNextGlobal } from '..'
 import { useRouter } from 'next/router'
 
-let windowTop = 0
-
 /**
  * 顶部导航
  * @param {*} param0
@@ -26,32 +23,49 @@ const TopNav = (props) => {
   const searchDrawer = useRef()
   const collapseRef = useRef(null)
   const router = useRouter()
+  const rafRef = useRef(null)
+  const navRef = useRef(null)
+  const windowTopRef = useRef(0)
+  const [isOpen, changeShow] = useState(false)
 
-  const scrollTrigger = useCallback(throttle(() => {
-    const scrollS = window.scrollY
-    if (scrollS >= windowTop && scrollS > 10) {
-      const nav = document.querySelector('#sticky-nav')
-      nav && nav.classList.replace('top-0', '-top-40')
-      windowTop = scrollS
-    } else {
-      const nav = document.querySelector('#sticky-nav')
-      nav && nav.classList.replace('-top-40', 'top-0')
-      windowTop = scrollS
+  const scrollTrigger = useCallback(() => {
+    if (rafRef.current) {
+      return
     }
-  }, 200), [])
+    rafRef.current = requestAnimationFrame(() => {
+      rafRef.current = null
+      const scrollS = window.scrollY
+      if (!navRef.current) {
+        navRef.current = document.querySelector('#sticky-nav')
+      }
+      if (scrollS >= windowTopRef.current && scrollS > 10) {
+        navRef.current && navRef.current.classList.replace('top-0', '-top-40')
+        windowTopRef.current = scrollS
+      } else {
+        navRef.current && navRef.current.classList.replace('-top-40', 'top-0')
+        windowTopRef.current = scrollS
+      }
+    })
+  }, [])
+
+  const menuCollapseHide = useCallback(() => {
+    changeShow(false)
+  }, [])
 
   // 监听滚动
   useEffect(() => {
     if (siteConfig('NEXT_NAV_TYPE', null, CONFIG) === 'autoCollapse') {
+      navRef.current = document.querySelector('#sticky-nav')
       scrollTrigger()
-      window.addEventListener('scroll', scrollTrigger)
+      window.addEventListener('scroll', scrollTrigger, { passive: true })
     }
     return () => {
+      if (rafRef.current) {
+        cancelAnimationFrame(rafRef.current)
+      }
       siteConfig('NEXT_NAV_TYPE', null, CONFIG) === 'autoCollapse' && window.removeEventListener('scroll', scrollTrigger)
     }
-  }, [])
-
-  const [isOpen, changeShow] = useState(false)
+  }, [scrollTrigger])
 
   // 监听滚动
   useEffect(() => {
@@ -59,15 +73,11 @@ const TopNav = (props) => {
     return () => {
       router.events.off('routeChangeComplete', menuCollapseHide)
     }
-  }, [])
+  }, [menuCollapseHide, router.events])
 
   /**
    * 点击切换页面后关闭这点菜单
    */
-  const menuCollapseHide = () => {
-    changeShow(false)
-  }
-
   const toggleMenuOpen = () => {
     changeShow(!isOpen)
   }
@@ -87,14 +97,14 @@ const TopNav = (props) => {
             <section className='mt-8'>
                 <div className='text-sm flex flex-nowrap justify-between font-light px-2'>
                     <div className='text-gray-600 dark:text-gray-200'><i className='mr-2 fas fa-th-list' />{locale.COMMON.CATEGORY}</div>
-                    <Link
+                    <SmartLink
                         href={'/category'}
                         passHref
                         className='mb-3 text-gray-500 hover:text-black dark:text-gray-400 dark:hover:text-white hover:underline cursor-pointer'>
 
                         {locale.COMMON.MORE} <i className='fas fa-angle-double-right' />
 
-                    </Link>
+                    </SmartLink>
                 </div>
                 <CategoryGroup currentCategory={currentCategory} categories={categories} />
             </section>
@@ -104,14 +114,14 @@ const TopNav = (props) => {
             <section className='mt-4'>
                 <div className='text-sm py-2 px-2 flex flex-nowrap justify-between font-light dark:text-gray-200'>
                     <div className='text-gray-600 dark:text-gray-200'><i className='mr-2 fas fa-tag' />{locale.COMMON.TAGS}</div>
-                    <Link
+                    <SmartLink
                         href={'/tag'}
                         passHref
                         className='text-gray-500 hover:text-black  dark:hover:text-white hover:underline cursor-pointer'>
 
                         {locale.COMMON.MORE} <i className='fas fa-angle-double-right' />
 
-                    </Link>
+                    </SmartLink>
                 </div>
                 <div className='p-2'>
                     <TagGroups tags={tags} currentTag={currentTag} />

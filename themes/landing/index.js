@@ -11,16 +11,24 @@ import NotionPage from '@/components/NotionPage'
 import { siteConfig } from '@/lib/config'
 import { isBrowser } from '@/lib/utils'
 import { useRouter } from 'next/router'
+import dynamic from 'next/dynamic'
 import { useEffect } from 'react'
-import Features from './components/Features'
-import FeaturesBlocks from './components/FeaturesBlocks'
-import Footer from './components/Footer'
-import Header from './components/Header'
-import Hero from './components/Hero'
-import Newsletter from './components/Newsletter'
-import { Pricing } from './components/Pricing'
-import Testimonials from './components/Testimonials'
 import CONFIG from './config'
+
+const Header = dynamic(() => import('./components/Header'), { ssr: true })
+const Hero = dynamic(() => import('./components/Hero'), { ssr: true })
+const Features = dynamic(() => import('./components/Features'), { ssr: true })
+const FeaturesBlocks = dynamic(() => import('./components/FeaturesBlocks'), {
+  ssr: true
+})
+const Testimonials = dynamic(() => import('./components/Testimonials'), {
+  ssr: true
+})
+const Pricing = dynamic(() => import('./components/Pricing').then(mod => mod.Pricing), {
+  ssr: true
+})
+const Newsletter = dynamic(() => import('./components/Newsletter'), { ssr: true })
+const Footer = dynamic(() => import('./components/Footer'), { ssr: true })
 
 /**
  * 布局框架
@@ -76,13 +84,14 @@ const LayoutSlug = props => {
 
   // 如果 是 /article/[slug] 的文章路径则进行重定向到另一个域名
   const router = useRouter()
+  const waiting404 = siteConfig('POST_WAITING_TIME_FOR_404') * 1000
   useEffect(() => {
     // 404
     if (!post) {
       setTimeout(
         () => {
           if (isBrowser) {
-            const article = document.getElementById('notion-article')
+            const article = document.querySelector('#article-wrapper #notion-article')
             if (!article) {
               router.push('/404').then(() => {
                 console.warn('找不到页面', router.asPath)
@@ -90,7 +99,7 @@ const LayoutSlug = props => {
             }
           }
         },
-        siteConfig('POST_WAITING_TIME_FOR_404') * 1000
+        waiting404
       )
     }
   }, [post])

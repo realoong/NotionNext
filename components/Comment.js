@@ -1,60 +1,11 @@
 import Tabs from '@/components/Tabs'
 import { siteConfig } from '@/lib/config'
 import { isBrowser, isSearchEngineBot } from '@/lib/utils'
+import { stripTransientQueryParamsFromAsPath } from '@/lib/utils/stripTransientUrlParams'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import { useEffect, useRef, useState } from 'react'
 import Artalk from './Artalk'
-
-const WalineComponent = dynamic(
-  () => {
-    return import('@/components/WalineComponent')
-  },
-  { ssr: false }
-)
-
-const CusdisComponent = dynamic(
-  () => {
-    return import('@/components/CusdisComponent')
-  },
-  { ssr: false }
-)
-
-const TwikooCompenent = dynamic(
-  () => {
-    return import('@/components/Twikoo')
-  },
-  { ssr: false }
-)
-
-const GitalkComponent = dynamic(
-  () => {
-    return import('@/components/Gitalk')
-  },
-  { ssr: false }
-)
-const UtterancesComponent = dynamic(
-  () => {
-    return import('@/components/Utterances')
-  },
-  { ssr: false }
-)
-const GiscusComponent = dynamic(
-  () => {
-    return import('@/components/Giscus')
-  },
-  { ssr: false }
-)
-const WebMentionComponent = dynamic(
-  () => {
-    return import('@/components/WebMention')
-  },
-  { ssr: false }
-)
-
-const ValineComponent = dynamic(() => import('@/components/ValineComponent'), {
-  ssr: false
-})
 
 /**
  * 评论组件
@@ -76,6 +27,9 @@ const Comment = ({ frontMatter, className }) => {
   const COMMENT_UTTERRANCES_REPO = siteConfig('COMMENT_UTTERRANCES_REPO')
   const COMMENT_GITALK_CLIENT_ID = siteConfig('COMMENT_GITALK_CLIENT_ID')
   const COMMENT_WEBMENTION_ENABLE = siteConfig('COMMENT_WEBMENTION_ENABLE')
+  const COMMENT_NOTION_ENABLE =
+    siteConfig('COMMENT_NOTION_ENABLE') === true ||
+    siteConfig('COMMENT_NOTION_ENABLE') === 'true'
 
   useEffect(() => {
     // Check if the component is visible in the viewport
@@ -99,25 +53,37 @@ const Comment = ({ frontMatter, className }) => {
     }
   }, [frontMatter])
 
-  // 当连接中有特殊参数时跳转到评论区
-  if (
-    isBrowser &&
-    ('giscus' in router.query || router.query.target === 'comment')
-  ) {
-    setTimeout(() => {
-      const url = router.asPath.replace('?target=comment', '')
-      history.replaceState({}, '', url)
-      document
-        ?.getElementById('comment')
-        ?.scrollIntoView({ block: 'start', behavior: 'smooth' })
-    }, 1000)
-  }
+  useEffect(() => {
+    if (!isBrowser || !router.isReady) {
+      return
+    }
+    const hasGiscus = 'giscus' in router.query
+    const scrollComment = router.query.target === 'comment'
+    if (!hasGiscus && !scrollComment) {
+      return
+    }
+    if (scrollComment && !hasGiscus) {
+      const cleanPath = stripTransientQueryParamsFromAsPath(router.asPath)
+      window.history.replaceState(window.history.state, '', cleanPath)
+      router
+        .replace(cleanPath, undefined, { scroll: false, shallow: true })
+        .catch(() => {})
+    }
+    if (scrollComment || hasGiscus) {
+      const t = window.setTimeout(() => {
+        document
+          ?.getElementById('comment')
+          ?.scrollIntoView({ block: 'start', behavior: 'smooth' })
+      }, 400)
+      return () => window.clearTimeout(t)
+    }
+  }, [router.isReady, router.asPath, router.query])
 
   if (!frontMatter) {
-    return <>Loading...</>
+    return null
   }
 
-  if (isSearchEngineBot()) {
+  if (isSearchEngineBot) {
     return null
   }
 
@@ -131,7 +97,8 @@ const Comment = ({ frontMatter, className }) => {
       key={frontMatter?.id}
       id='comment'
       ref={commentRef}
-      className={`comment mt-5 text-gray-800 dark:text-gray-300 ${className || ''}`}>
+      className={`comment mt-5 text-gray-800 dark:text-gray-300 ${className || ''}`}
+    >
       {/* 延迟加载评论区 */}
       {!shouldLoad && (
         <div className='text-center'>
@@ -198,10 +165,71 @@ const Comment = ({ frontMatter, className }) => {
               <WebMentionComponent frontMatter={frontMatter} className='px-2' />
             </div>
           )}
+
+          {COMMENT_NOTION_ENABLE && (
+            <div key='Notion'>
+              <NotionCommentsComponent postId={frontMatter.id} />
+            </div>
+          )}
         </Tabs>
       )}
     </div>
   )
 }
+
+const WalineComponent = dynamic(
+  () => {
+    return import('@/components/WalineComponent')
+  },
+  { ssr: false }
+)
+
+const CusdisComponent = dynamic(
+  () => {
+    return import('@/components/CusdisComponent')
+  },
+  { ssr: false }
+)
+
+const TwikooCompenent = dynamic(
+  () => {
+    return import('@/components/Twikoo')
+  },
+  { ssr: false }
+)
+
+const GitalkComponent = dynamic(
+  () => {
+    return import('@/components/Gitalk')
+  },
+  { ssr: false }
+)
+const UtterancesComponent = dynamic(
+  () => {
+    return import('@/components/Utterances')
+  },
+  { ssr: false }
+)
+const GiscusComponent = dynamic(
+  () => {
+    return import('@/components/Giscus')
+  },
+  { ssr: false }
+)
+const WebMentionComponent = dynamic(
+  () => {
+    return import('@/components/WebMention')
+  },
+  { ssr: false }
+)
+
+const ValineComponent = dynamic(() => import('@/components/ValineComponent'), {
+  ssr: false
+})
+
+const NotionCommentsComponent = dynamic(
+  () => import('@/components/NotionComments'),
+  { ssr: false }
+)
 
 export default Comment

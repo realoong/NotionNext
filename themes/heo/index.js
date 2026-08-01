@@ -20,7 +20,7 @@ import { useGlobal } from '@/lib/global'
 import { loadWowJS } from '@/lib/plugins/wow'
 import { isBrowser } from '@/lib/utils'
 import { Transition } from '@headlessui/react'
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import BlogPostArchive from './components/BlogPostArchive'
@@ -42,6 +42,8 @@ import SearchNav from './components/SearchNav'
 import SideRight from './components/SideRight'
 import CONFIG from './config'
 import { Style } from './style'
+import AISummary from '@/components/AISummary'
+import ArticleExpirationNotice from '@/components/ArticleExpirationNotice'
 
 /**
  * 基础布局 采用上中下布局，移动端使用顶部侧边导航栏
@@ -93,7 +95,7 @@ const LayoutBase = props => {
   return (
     <div
       id='theme-heo'
-      className={`${siteConfig('FONT_STYLE')} bg-[#f7f9fe] dark:bg-[#18171d] h-full min-h-screen flex flex-col scroll-smooth`}>
+      className={`${siteConfig('FONT_STYLE')} bg-[var(--heo-color-bg)] dark:bg-[var(--heo-color-bg-dark)] h-full min-h-screen flex flex-col scroll-smooth`}>
       <Style />
 
       {/* 顶部嵌入 导航栏，首页放hero，文章页放文章详情 */}
@@ -122,7 +124,7 @@ const LayoutBase = props => {
       </main>
 
       {/* 页脚 */}
-      <Footer title={siteConfig('TITLE')} />
+      <Footer />
 
       {HEO_LOADING_COVER && <LoadingCover />}
     </div>
@@ -181,7 +183,7 @@ const LayoutSearch = props => {
   useEffect(() => {
     // 高亮搜索结果
     if (currentSearch) {
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         replaceSearchResult({
           doms: document.getElementsByClassName('replace'),
           search: currentSearch,
@@ -191,10 +193,11 @@ const LayoutSearch = props => {
           }
         })
       }, 100)
+      return () => clearTimeout(timer)
     }
-  }, [])
+  }, [currentSearch])
   return (
-    <div {...props} currentSearch={currentSearch}>
+    <div data-current-search={currentSearch || ''}>
       <div id='post-outer-wrapper' className='px-5  md:px-0'>
         {!currentSearch ? (
           <SearchNav {...props} />
@@ -223,7 +226,7 @@ const LayoutArchive = props => {
   // 归档页顶部显示条，如果是默认归档则不显示。分类详情页显示分类列表，标签详情页显示当前标签
 
   return (
-    <div className='p-5 rounded-xl border dark:border-gray-600 max-w-6xl w-full bg-white dark:bg-[#1e1e1e]'>
+    <div className='p-5 rounded-xl border dark:border-gray-600 max-w-6xl w-full bg-[var(--heo-color-card)] dark:bg-[var(--heo-color-card-dark)]'>
       {/* 文章分类条 */}
       <CategoryBar {...props} border={false} />
 
@@ -267,13 +270,16 @@ const LayoutSlug = props => {
     siteConfig('COMMENT_WEBMENTION_ENABLE')
 
   const router = useRouter()
+  const waiting404 = siteConfig('POST_WAITING_TIME_FOR_404') * 1000
   useEffect(() => {
     // 404
     if (!post) {
-      setTimeout(
+      const timer = setTimeout(
         () => {
           if (isBrowser) {
-            const article = document.getElementById('notion-article')
+            const article = document.querySelector(
+              '#article-wrapper #notion-article'
+            )
             if (!article) {
               router.push('/404').then(() => {
                 console.warn('找不到页面', router.asPath)
@@ -281,28 +287,28 @@ const LayoutSlug = props => {
             }
           }
         },
-        siteConfig('POST_WAITING_TIME_FOR_404') * 1000
+        waiting404
       )
+      return () => clearTimeout(timer)
     }
-  }, [post])
+  }, [post, router, waiting404])
   return (
     <>
       <div
-        className={`article h-full w-full ${fullWidth ? '' : 'xl:max-w-5xl'} ${hasCode ? 'xl:w-[73.15vw]' : ''}  bg-white dark:bg-[#18171d] dark:border-gray-600 lg:hover:shadow lg:border rounded-2xl lg:px-2 lg:py-4 `}>
+        className={`article h-full w-full ${fullWidth ? '' : 'xl:max-w-5xl'} ${hasCode ? 'xl:w-[73.15vw]' : ''}  bg-[var(--heo-color-card)] dark:bg-[var(--heo-color-bg-dark)] dark:border-gray-600 lg:hover:shadow lg:border rounded-2xl lg:px-2 lg:py-4 `}>
         {/* 文章锁 */}
         {lock && <PostLock validPassword={validPassword} />}
 
-        {!lock && (
+        {!lock && post && (
           <div className='mx-auto md:w-full md:px-5'>
             {/* 文章主体 */}
-            <article
-              id='article-wrapper'
-              itemScope
-              itemType='https://schema.org/Movie'>
+            <article id='article-wrapper'>
               {/* Notion文章主体 */}
               <section
                 className='wow fadeInUp p-5 justify-center mx-auto'
                 data-wow-delay='.2s'>
+                <ArticleExpirationNotice post={post} />
+                <AISummary aiSummary={post.aiSummary} />
                 <WWAds orientation='horizontal' className='w-full' />
                 {post && <NotionPage post={post} />}
                 <WWAds orientation='horizontal' className='w-full' />
@@ -390,11 +396,11 @@ const Layout404 = props => {
                   404
                 </h1>
                 <div className='dark:text-white'>请尝试站内搜索寻找文章</div>
-                <Link href='/'>
-                  <button className='bg-blue-500 py-2 px-4 text-white shadow rounded-lg hover:bg-blue-600 hover:shadow-md duration-200 transition-all'>
+                <SmartLink href='/'>
+                  <button className='bg-[var(--heo-color-primary)] py-2 px-4 text-[var(--heo-color-primary-text)] shadow rounded-lg hover:bg-[var(--heo-color-primary-hover)] hover:shadow-md duration-200 transition-all'>
                     回到主页
                   </button>
-                </Link>
+                </SmartLink>
               </div>
             </div>
 
@@ -428,22 +434,22 @@ const LayoutCategoryIndex = props => {
         className='duration-200 flex flex-wrap m-10 justify-center'>
         {categoryOptions?.map(category => {
           return (
-            <Link
+            <SmartLink
               key={category.name}
               href={`/category/${category.name}`}
               passHref
               legacyBehavior>
               <div
                 className={
-                  'group mr-5 mb-5 flex flex-nowrap items-center border bg-white text-2xl rounded-xl dark:hover:text-white px-4 cursor-pointer py-3 hover:text-white hover:bg-indigo-600 transition-all hover:scale-110 duration-150'
+                  'group mr-5 mb-5 flex flex-nowrap items-center border bg-[var(--heo-color-card)] text-2xl rounded-xl dark:hover:text-white px-4 cursor-pointer py-3 hover:text-[var(--heo-color-primary-text)] hover:bg-[var(--heo-color-primary)] transition-all hover:scale-110 duration-150'
                 }>
                 <HashTag className={'w-5 h-5 stroke-gray-500 stroke-2'} />
                 {category.name}
-                <div className='bg-[#f1f3f8] ml-1 px-2 rounded-lg group-hover:text-indigo-600 '>
+                <div className='bg-[var(--heo-color-card-muted)] ml-1 px-2 rounded-lg group-hover:text-[var(--heo-color-primary)] '>
                   {category.count}
                 </div>
               </div>
-            </Link>
+            </SmartLink>
           )
         })}
       </div>
@@ -470,22 +476,22 @@ const LayoutTagIndex = props => {
         className='duration-200 flex flex-wrap space-x-5 space-y-5 m-10 justify-center'>
         {tagOptions.map(tag => {
           return (
-            <Link
+            <SmartLink
               key={tag.name}
               href={`/tag/${tag.name}`}
               passHref
               legacyBehavior>
               <div
                 className={
-                  'group flex flex-nowrap items-center border bg-white text-2xl rounded-xl dark:hover:text-white px-4 cursor-pointer py-3 hover:text-white hover:bg-indigo-600 transition-all hover:scale-110 duration-150'
+                  'group flex flex-nowrap items-center border bg-[var(--heo-color-card)] text-2xl rounded-xl dark:hover:text-white px-4 cursor-pointer py-3 hover:text-[var(--heo-color-primary-text)] hover:bg-[var(--heo-color-primary)] transition-all hover:scale-110 duration-150'
                 }>
                 <HashTag className={'w-5 h-5 stroke-gray-500 stroke-2'} />
                 {tag.name}
-                <div className='bg-[#f1f3f8] ml-1 px-2 rounded-lg group-hover:text-indigo-600 '>
+                <div className='bg-[var(--heo-color-card-muted)] ml-1 px-2 rounded-lg group-hover:text-[var(--heo-color-primary)] '>
                   {tag.count}
                 </div>
               </div>
-            </Link>
+            </SmartLink>
           )
         })}
       </div>

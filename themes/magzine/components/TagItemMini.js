@@ -1,12 +1,12 @@
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 
 const TagItemMini = ({ tag, selected = false }) => {
   return (
-    <Link
+    <SmartLink
       key={tag}
       href={selected ? '/' : `/tag/${encodeURIComponent(tag.name)}`}
       passHref
-      className={`cursor-pointer inline-block rounded hover:bg-gray-500 hover:text-white duration-200
+      className={`cursor-pointer inline-block shrink-0 rounded hover:bg-gray-500 hover:text-white duration-200
         py-1 px-2 text-xs whitespace-nowrap dark:hover:text-white
          ${
            selected
@@ -17,7 +17,7 @@ const TagItemMini = ({ tag, selected = false }) => {
         {/* {selected && <i className='mr-1 fas fa-tag'/>} */}#
         {tag.name + (tag.count ? `(${tag.count})` : '')}{' '}
       </div>
-    </Link>
+    </SmartLink>
   )
 }
 

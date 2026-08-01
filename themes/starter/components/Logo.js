@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable @next/next/no-html-link-for-pages */
-import { siteConfig } from '@/lib/config'
+import LazyImage from '@/components/LazyImage'
+import { starterConfig } from '../config'
 import { useGlobal } from '@/lib/global'
 import throttle from 'lodash.throttle'
 import { useRouter } from 'next/router'
@@ -10,10 +11,12 @@ import { useEffect, useState } from 'react'
  * 站点图标
  * @returns
  */
-export const Logo = ({ white }) => {
+export const Logo = props => {
+  const { white, NOTION_CONFIG } = props
   const router = useRouter()
+  const logoWhite = starterConfig('STARTER_LOGO_WHITE')
+  const logoNormal = starterConfig('STARTER_LOGO')
   const { isDarkMode } = useGlobal()
-  const logoWhite = siteConfig('STARTER_LOGO_WHITE')
   const [logo, setLogo] = useState(logoWhite)
   const [logoTextColor, setLogoTextColor] = useState('text-white')
 
@@ -24,17 +27,18 @@ export const Logo = ({ white }) => {
       const scrollY = window.scrollY
       // 何时显示浅色或白底的logo
       const homePageNavBar = router.route === '/' && scrollY < 10 // 在首页并且视窗在页面顶部
+
       if (white || isDarkMode || homePageNavBar) {
-        setLogo(siteConfig('STARTER_LOGO_WHITE'))
+        setLogo(logoWhite)
         setLogoTextColor('text-white')
       } else {
-        setLogo(siteConfig('STARTER_LOGO'))
+        setLogo(logoNormal)
         setLogoTextColor('text-black')
       }
     }, throttleMs)
 
     navBarScrollListener()
-    window.addEventListener('scroll', navBarScrollListener)
+    window.addEventListener('scroll', navBarScrollListener, { passive: true })
     return () => {
       window.removeEventListener('scroll', navBarScrollListener)
     }
@@ -45,13 +49,14 @@ export const Logo = ({ white }) => {
       <div className='navbar-logo flex items-center w-full py-5 cursor-pointer'>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         {logo && (
-          <img
+          <LazyImage
+            priority
             onClick={() => {
               router.push('/')
             }}
             src={logo}
             alt='logo'
-            className='header-logo w-full'
+            className='header-logo mr-1 h-8'
           />
         )}
         {/* logo文字 */}
@@ -59,8 +64,8 @@ export const Logo = ({ white }) => {
           onClick={() => {
             router.push('/')
           }}
-          className={`${logoTextColor} dark:text-white py-1.5 header-logo-text whitespace-nowrap text-2xl font-semibold`}>
-          {siteConfig('TITLE')}
+          className={`${logoTextColor} logo dark:text-white py-1.5 header-logo-text whitespace-nowrap text-2xl font-semibold`}>
+          {starterConfig('TITLE')}
         </span>
       </div>
     </div>

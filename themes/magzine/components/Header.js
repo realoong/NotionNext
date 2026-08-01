@@ -1,9 +1,9 @@
 import Collapse from '@/components/Collapse'
 import DarkModeButton from '@/components/DarkModeButton'
+import DashboardButton from '@/components/ui/dashboard/DashboardButton'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
-import { SignInButton, SignedOut, UserButton } from '@clerk/nextjs'
-import throttle from 'lodash.throttle'
+import { SignInButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
 import { useRouter } from 'next/router'
 import { useEffect, useRef, useState } from 'react'
 import { useMagzineGlobal } from '..'
@@ -19,9 +19,8 @@ import { MenuItemDrop } from './MenuItemDrop'
  */
 export default function Header(props) {
   const { customNav, customMenu } = props
-  const [isOpen, changeShow] = useState(false)
+  const [isOpen, setOpen] = useState(false)
   const collapseRef = useRef(null)
-  const lastScrollY = useRef(0) // 用于存储上一次的滚动位置
   const { locale } = useGlobal()
   const router = useRouter()
   const { searchModal } = useMagzineGlobal()
@@ -56,34 +55,12 @@ export default function Header(props) {
   let links = defaultLinks.concat(customNav)
 
   const toggleMenuOpen = () => {
-    changeShow(!isOpen)
+    setOpen(!isOpen)
   }
 
-  // 向下滚动时，调整导航条高度
   useEffect(() => {
-    scrollTrigger()
-    window.addEventListener('scroll', scrollTrigger)
-    return () => {
-      window.removeEventListener('scroll', scrollTrigger)
-    }
-  }, [])
-
-  const throttleMs = 150
-
-  const scrollTrigger = throttle(() => {
-    const scrollS = window.scrollY
-    if (scrollS === lastScrollY.current) return // 如果滚动位置没有变化，则不做任何操作
-
-    const nav = document.querySelector('#top-navbar')
-    const narrowNav = scrollS > 60
-    if (narrowNav) {
-      nav && nav.classList.replace('h-20', 'h-14')
-    } else {
-      nav && nav.classList.replace('h-14', 'h-20')
-    }
-
-    lastScrollY.current = scrollS // 更新上一次的滚动位置
-  }, throttleMs)
+    setOpen(false)
+  }, [router])
 
   const [showSearchInput, changeShowSearchInput] = useState(false)
 
@@ -145,15 +122,15 @@ export default function Header(props) {
         {!showSearchInput && (
           <>
             {/* 左侧图标Logo */}
-            <div className='flex gap-x-8 h-full'>
-              <LogoBar {...props} />
+            <div className='flex gap-x-2 lg:gap-x-4 h-full'>
+              <LogoBar {...props} className={'text-sm md:text-md lg:text-lg'} />
               {/* 桌面端顶部菜单 */}
-              <div className='hidden md:flex items-center gap-x-4'>
+              <ul className='hidden md:flex items-center gap-x-4 py-1 text-sm md:text-md'>
                 {links &&
                   links?.map((link, index) => (
                     <MenuItemDrop key={index} link={link} />
                   ))}
-              </div>
+              </ul>
             </div>
           </>
         )}
@@ -199,7 +176,10 @@ export default function Header(props) {
                   </button>
                 </SignInButton>
               </SignedOut>
-              <UserButton />
+              <SignedIn>
+                <UserButton />
+                <DashboardButton />
+              </SignedIn>
             </>
           )}
         </div>
@@ -211,7 +191,7 @@ export default function Header(props) {
         collapseRef={collapseRef}
         isOpen={isOpen}
         className='md:hidden'>
-        <div className='bg-white dark:bg-hexo-black-gray pt-1 py-2 lg:hidden '>
+        <div className='bg-white dark:bg-hexo-black-gray pt-1 py-2'>
           <MenuBarMobile
             {...props}
             onHeightChange={param =>

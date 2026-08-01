@@ -3,9 +3,16 @@ import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import { isBrowser } from '@/lib/utils'
 import dynamic from 'next/dynamic'
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 import { useRouter } from 'next/router'
-import { createContext, useContext, useEffect, useRef, useState } from 'react'
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState
+} from 'react'
 import Announcement from './components/Announcement'
 import ArticleDetail from './components/ArticleDetail'
 import { ArticleLock } from './components/ArticleLock'
@@ -48,20 +55,48 @@ const LayoutBase = props => {
   const floatButtonGroup = useRef(null)
   const [showRightFloat, switchShow] = useState(false)
   const [percent, changePercent] = useState(0) // 页面阅读百分比
-  const scrollListener = () => {
-    const targetRef = document.getElementById('wrapper')
-    const clientHeight = targetRef?.clientHeight
-    const scrollY = window.pageYOffset
-    const fullHeight = clientHeight - window.outerHeight
-    let per = parseFloat(((scrollY / fullHeight) * 100).toFixed(0))
-    if (per > 100) per = 100
-    const shouldShow = scrollY > 100 && per > 0
+  const showRightFloatRef = useRef(showRightFloat)
+  const percentRef = useRef(percent)
+  const rafRef = useRef(null)
 
-    if (shouldShow !== showRightFloat) {
-      switchShow(shouldShow)
+  useEffect(() => {
+    showRightFloatRef.current = showRightFloat
+  }, [showRightFloat])
+
+  useEffect(() => {
+    percentRef.current = percent
+  }, [percent])
+
+  const scrollListener = useCallback(() => {
+    if (rafRef.current) {
+      return
     }
-    changePercent(per)
-  }
+
+    rafRef.current = requestAnimationFrame(() => {
+      rafRef.current = null
+      const targetWrapper = document.getElementById('wrapper')
+      const clientHeight = targetWrapper?.clientHeight
+      const fullHeight = clientHeight - window.innerHeight
+      if (!targetWrapper || !fullHeight || fullHeight <= 0) {
+        return
+      }
+
+      const scrollY = window.pageYOffset
+      let per = parseFloat(((scrollY / fullHeight) * 100).toFixed(0))
+      if (per > 100) per = 100
+      if (per < 0) per = 0
+      const shouldShow = scrollY > 100 && per > 0
+
+      if (shouldShow !== showRightFloatRef.current) {
+        showRightFloatRef.current = shouldShow
+        switchShow(shouldShow)
+      }
+      if (per !== percentRef.current) {
+        percentRef.current = per
+        changePercent(per)
+      }
+    })
+  }, [changePercent, switchShow])
 
   useEffect(() => {
     // facebook messenger 插件需要调整右下角悬浮按钮的高度
@@ -72,9 +107,15 @@ const LayoutBase = props => {
       floatButtonGroup?.current?.classList.replace('bottom-12', 'bottom-24')
     }
 
-    document.addEventListener('scroll', scrollListener)
-    return () => document.removeEventListener('scroll', scrollListener)
-  }, [showRightFloat])
+    document.addEventListener('scroll', scrollListener, { passive: true })
+    return () => {
+      document.removeEventListener('scroll', scrollListener)
+      if (rafRef.current) {
+        cancelAnimationFrame(rafRef.current)
+        rafRef.current = null
+      }
+    }
+  }, [scrollListener])
 
   // 悬浮抽屉
   const drawerRight = useRef(null)
@@ -322,13 +363,14 @@ const LayoutSlug = props => {
   const { post, lock, validPassword } = props
 
   const router = useRouter()
+  const waiting404 = siteConfig('POST_WAITING_TIME_FOR_404') * 1000
   useEffect(() => {
     // 404
     if (!post) {
       setTimeout(
         () => {
           if (isBrowser) {
-            const article = document.getElementById('notion-article')
+            const article = document.querySelector('#article-wrapper #notion-article')
             if (!article) {
               router.push('/404').then(() => {
                 console.warn('找不到页面', router.asPath)
@@ -336,7 +378,7 @@ const LayoutSlug = props => {
             }
           }
         },
-        siteConfig('POST_WAITING_TIME_FOR_404') * 1000
+        waiting404
       )
     }
   }, [post])
@@ -367,7 +409,7 @@ const LayoutCategoryIndex = props => {
         <div id='category-list' className='duration-200 flex flex-wrap'>
           {categoryOptions?.map(category => {
             return (
-              <Link
+              <SmartLink
                 key={category.name}
                 href={`/category/${category.name}`}
                 passHref
@@ -379,7 +421,7 @@ const LayoutCategoryIndex = props => {
                   <i className='mr-4 fas fa-folder' />
                   {category.name}({category.count})
                 </div>
-              </Link>
+              </SmartLink>
             )
           })}
         </div>

@@ -1,9 +1,8 @@
 import BLOG from '@/blog.config'
 import { siteConfig } from '@/lib/config'
-import { getGlobalData } from '@/lib/db/getSiteData'
+import { fetchGlobalAllData } from '@/lib/db/SiteDataApi'
 // import { getGlobalData } from '@/lib/db/getSiteData'
-import { getLayoutByTheme } from '@/themes/theme'
-import { useRouter } from 'next/router'
+import { DynamicLayout } from '@/themes/theme'
 
 /**
  * 登录
@@ -11,19 +10,15 @@ import { useRouter } from 'next/router'
  * @returns
  */
 const SignIn = props => {
-  // 根据页面路径加载不同Layout文件
-  const Layout = getLayoutByTheme({
-    theme: siteConfig('THEME'),
-    router: useRouter()
-  })
-  return <Layout {...props} />
+  const theme = siteConfig('THEME', BLOG.THEME, props.NOTION_CONFIG)
+  return <DynamicLayout theme={theme} layoutName='LayoutSignIn' {...props} />
 }
 
 export async function getStaticProps(req) {
   const { locale } = req
 
   const from = 'SignIn'
-  const props = await getGlobalData({ from, locale })
+  const props = await fetchGlobalAllData({ from, locale })
 
   delete props.allPages
   return {
@@ -42,7 +37,7 @@ export async function getStaticProps(req) {
  * catch-all route for clerk
  * @returns
  */
-export async function getStaticPaths() {
+export function getStaticPaths() {
   return {
     paths: [
       { params: { index: [] } }, // 使 /sign-in 路径可访问

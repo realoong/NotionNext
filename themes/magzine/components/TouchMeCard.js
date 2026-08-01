@@ -1,6 +1,7 @@
 import FlipCard from '@/components/FlipCard'
 import { siteConfig } from '@/lib/config'
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
+import CONFIG from '../config'
 
 /**
  * 交流频道
@@ -8,14 +9,14 @@ import Link from 'next/link'
  */
 export default function TouchMeCard() {
   // 开关
-  if (!siteConfig('MAGZINE_SOCIAL_CARD', null)) {
+  if (!siteConfig('MAGZINE_SOCIAL_CARD', null, CONFIG)) {
     return <></>
   }
 
   return (
     <div className={'relative h-32 text-black flex flex-col'}>
       <FlipCard
-        className='cursor-pointer lg:py-8 px-4 py-4 border bg-[#7BE986] dark:bg-yellow-600 dark:border-gray-600'
+        className='cursor-pointer lg:py-8 px-4 py-4 border bg-[var(--magzine-console-primary)] dark:border-gray-600'
         frontContent={
           <div className='h-full'>
             <h2 className='font-[1000] text-3xl'>
@@ -27,11 +28,11 @@ export default function TouchMeCard() {
           </div>
         }
         backContent={
-          <Link href={siteConfig('MAGZINE_SOCIAL_CARD_URL')}>
+          <SmartLink href={siteConfig('MAGZINE_SOCIAL_CARD_URL', '#', CONFIG)}>
             <div className='font-[1000] text-xl h-full'>
               {siteConfig('MAGZINE_SOCIAL_CARD_TITLE_3')}
             </div>
-          </Link>
+          </SmartLink>
         }
       />
     </div>

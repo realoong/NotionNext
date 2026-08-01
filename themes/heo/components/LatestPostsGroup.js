@@ -1,5 +1,5 @@
 import LazyImage from '@/components/LazyImage'
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 
 /**
  * 最新文章列表
@@ -22,7 +22,7 @@ const LatestPostsGroup = ({ latestPosts, siteInfo }) => {
           : siteInfo?.pageCover
 
         return (
-          <Link
+          <SmartLink
             key={post.id}
             passHref
             title={post.title}
@@ -37,12 +37,12 @@ const LatestPostsGroup = ({ latestPosts, siteInfo }) => {
 
             <div
               className={
-                ' font-bold  overflow-x-hidden dark:text-white hover:text-indigo-600 px-2 duration-200 w-full rounded ' +
-                ' hover:text-indigo-400 cursor-pointer'
+                ' font-bold  overflow-x-hidden dark:text-white hover:text-[var(--heo-color-primary)] px-2 duration-200 w-full rounded ' +
+                ' cursor-pointer'
               }>
               <div className='line-clamp-2 menu-link'>{post.title}</div>
             </div>
-          </Link>
+          </SmartLink>
         )
       })}
     </div>

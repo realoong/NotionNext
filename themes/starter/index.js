@@ -4,7 +4,6 @@
 'use client'
 import Loading from '@/components/Loading'
 import NotionPage from '@/components/NotionPage'
-import { siteConfig } from '@/lib/config'
 import { isBrowser } from '@/lib/utils'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
@@ -21,17 +20,22 @@ import { Hero } from './components/Hero'
 import { Pricing } from './components/Pricing'
 import { Team } from './components/Team'
 import { Testimonials } from './components/Testimonials'
-import CONFIG from './config'
+import CONFIG, { starterConfig } from './config'
 import { Style } from './style'
 // import { MadeWithButton } from './components/MadeWithButton'
 import Comment from '@/components/Comment'
+import replaceSearchResult from '@/components/Mark'
 import ShareBar from '@/components/ShareBar'
+import DashboardBody from '@/components/ui/dashboard/DashboardBody'
+import DashboardHeader from '@/components/ui/dashboard/DashboardHeader'
 import { useGlobal } from '@/lib/global'
 import { loadWowJS } from '@/lib/plugins/wow'
 import { SignIn, SignUp } from '@clerk/nextjs'
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
+import { ArticleLock } from './components/ArticleLock'
 import { Banner } from './components/Banner'
 import { CTA } from './components/CTA'
+import SearchInput from './components/SearchInput'
 import { SignInForm } from './components/SignInForm'
 import { SignUpForm } from './components/SignUpForm'
 import { SVG404 } from './components/svg/SVG404'
@@ -45,32 +49,49 @@ import { SVG404 } from './components/svg/SVG404'
  * @returns
  */
 const LayoutBase = props => {
-  const { children } = props
+    const { children } = props
+    // 极简模式，会隐藏掉页头页脚等组件，便于嵌入网页等功能 
+    const { isLiteMode } = useGlobal()
+    const router = useRouter()
 
-  // 加载wow动画
-  useEffect(() => {
-    loadWowJS()
-  }, [])
+    // 加载wow动画
+    useEffect(() => {
+        loadWowJS()
+    }, [])
 
-  return (
-    <div
-      id='theme-starter'
-      className={`${siteConfig('FONT_STYLE')} min-h-screen flex flex-col dark:bg-[#212b36] scroll-smooth`}>
-      <Style />
-      {/* 页头 */}
-      <Header {...props} />
+    // 特殊简化布局，如果识别到路由中有 ?lite=true，则给网页添加一些自定义的css样式，例如背景改成黑色
+    useEffect(() => {
+        const isLiteMode = router.query.lite === 'true'
+        console.log(router.query.lite, isLiteMode)
+        if (isLiteMode) {
+            document.body.style.backgroundColor = 'black'
+            document.body.style.color = 'white'
+        }
+    }, [])
 
-      {children}
+    return (
+        <div
+            id='theme-starter'
+            className={`${starterConfig('FONT_STYLE')} min-h-screen flex flex-col dark:bg-[#212b36] scroll-smooth`}>
+            <Style />
 
-      {/* 页脚 */}
-      <Footer {...props} />
+            {/* 页头 */}
+            {isLiteMode ? <></> : <Header {...props} />}
 
-      {/* 悬浮按钮 */}
-      <BackToTopButton />
+            <div id='main-wrapper' className='grow'>
+                {children}
+            </div>
 
-      {/* <MadeWithButton/> */}
-    </div>
-  )
+            {/* 页脚 */}
+            
+            {isLiteMode ? <></> : <Footer {...props} />}
+
+            {/* 悬浮按钮 */}
+            {isLiteMode ? <></> : <BackToTopButton />}
+
+            {/* <MadeWithButton/> */}
+        </div>
+    )
 }
 
 /**
@@ -79,43 +100,46 @@ const LayoutBase = props => {
  * @returns
  */
 const LayoutIndex = props => {
-  const count = siteConfig('STARTER_BLOG_COUNT', 3, CONFIG)
+  const count = starterConfig('STARTER_BLOG_COUNT', 3, CONFIG)
+  const { locale } = useGlobal()
   const posts = props?.allNavPages ? props.allNavPages.slice(0, count) : []
   return (
     <>
       {/* 英雄区 */}
-      {siteConfig('STARTER_HERO_ENABLE') && <Hero />}
+      {starterConfig('STARTER_HERO_ENABLE', true, CONFIG) && <Hero {...props} />}
       {/* 合作伙伴 */}
-      {siteConfig('STARTER_BRANDS_ENABLE') && <Brand />}
+      {starterConfig('STARTER_BRANDS_ENABLE', true, CONFIG) && <Brand />}
       {/* 产品特性 */}
-      {siteConfig('STARTER_FEATURE_ENABLE') && <Features />}
+      {starterConfig('STARTER_FEATURE_ENABLE', true, CONFIG) && <Features />}
       {/* 关于 */}
-      {siteConfig('STARTER_ABOUT_ENABLE') && <About />}
+      {starterConfig('STARTER_ABOUT_ENABLE', true, CONFIG) && <About />}
       {/* 价格 */}
-      {siteConfig('STARTER_PRICING_ENABLE') && <Pricing />}
+      {starterConfig('STARTER_PRICING_ENABLE', true, CONFIG) && <Pricing />}
       {/* 评价展示 */}
-      {siteConfig('STARTER_TESTIMONIALS_ENABLE') && <Testimonials />}
+      {starterConfig('STARTER_TESTIMONIALS_ENABLE', true, CONFIG) && (
+        <Testimonials />
+      )}
       {/* 常见问题 */}
-      {siteConfig('STARTER_FAQ_ENABLE') && <FAQ />}
+      {starterConfig('STARTER_FAQ_ENABLE', true, CONFIG) && <FAQ />}
       {/* 团队介绍 */}
-      {siteConfig('STARTER_TEAM_ENABLE') && <Team />}
+      {starterConfig('STARTER_TEAM_ENABLE', true, CONFIG) && <Team />}
       {/* 博文列表 */}
-      {siteConfig('STARTER_BLOG_ENABLE') && (
+      {starterConfig('STARTER_BLOG_ENABLE', true, CONFIG) && (
         <>
           <Blog posts={posts} />
           <div className='container mx-auto flex justify-end mb-4'>
-            <Link className='text-lg underline' href={'/archive'}>
-              <span>查看全部</span>
+            <SmartLink className='text-lg underline' href={'/archive'}>
+              <span>{locale.COMMON.MORE}</span>
               <i className='ml-2 fas fa-arrow-right' />
-            </Link>
+            </SmartLink>
           </div>
         </>
       )}
       {/* 联系方式 */}
-      {siteConfig('STARTER_CONTACT_ENABLE') && <Contact />}
+      {starterConfig('STARTER_CONTACT_ENABLE', true, CONFIG) && <Contact />}
 
       {/* 行动呼吁 */}
-      {siteConfig('STARTER_CTA_ENABLE') && <CTA />}
+      {starterConfig('STARTER_CTA_ENABLE', true, CONFIG) && <CTA />}
     </>
   )
 }
@@ -126,18 +150,18 @@ const LayoutIndex = props => {
  * @returns
  */
 const LayoutSlug = props => {
-  const { post } = props
+  const { post, lock, validPassword } = props
 
   // 如果 是 /article/[slug] 的文章路径则視情況进行重定向到另一个域名
   const router = useRouter()
   if (
     !post &&
-    siteConfig('STARTER_POST_REDIRECT_ENABLE') &&
+    starterConfig('STARTER_POST_REDIRECT_ENABLE') &&
     isBrowser &&
     router.route === '/[prefix]/[slug]'
   ) {
     const redirectUrl =
-      siteConfig('STARTER_POST_REDIRECT_URL') +
+      starterConfig('STARTER_POST_REDIRECT_URL') +
       router.asPath.replace('?theme=landing', '')
     router.push(redirectUrl)
     return (
@@ -153,11 +177,15 @@ const LayoutSlug = props => {
       <div className='container grow'>
         <div className='flex flex-wrap justify-center -mx-4'>
           <div id='container-inner' className='w-full p-4'>
-            <div id='article-wrapper' className='mx-auto'>
-              <NotionPage {...props} />
-              <Comment frontMatter={post} />
-              <ShareBar post={post} />
-            </div>
+            {lock && <ArticleLock validPassword={validPassword} />}
+
+            {!lock && post && (
+              <div id='article-wrapper' className='mx-auto'>
+                <NotionPage {...props} />
+                <Comment frontMatter={post} />
+                <ShareBar post={post} />
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -165,7 +193,65 @@ const LayoutSlug = props => {
   )
 }
 
-const LayoutSearch = props => <></>
+/**
+ * 仪表盘
+ * @param {*} props
+ * @returns
+ */
+const LayoutDashboard = props => {
+  const { post } = props
+
+  return (
+    <>
+      <div className='container grow'>
+        <div className='flex flex-wrap justify-center -mx-4'>
+          <div id='container-inner' className='w-full p-4'>
+            {post && (
+              <div id='article-wrapper' className='mx-auto'>
+                <NotionPage {...props} />
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+      {/* 仪表盘 */}
+      <DashboardHeader />
+      <DashboardBody />
+    </>
+  )
+}
+
+/**
+ * 搜索
+ * @param {*} props
+ * @returns
+ */
+const LayoutSearch = props => {
+  const { keyword } = props
+  const router = useRouter()
+  const currentSearch = keyword || router?.query?.s
+
+  useEffect(() => {
+    if (isBrowser) {
+      replaceSearchResult({
+        doms: document.getElementById('posts-wrapper'),
+        search: keyword,
+        target: {
+          element: 'span',
+          className: 'text-red-500 border-b border-dashed'
+        }
+      })
+    }
+  }, [])
+  return (
+    <>
+      <section className='max-w-7xl mx-auto bg-white pb-10 pt-20 dark:bg-dark lg:pb-20 lg:pt-[120px]'>
+        <SearchInput {...props} />
+        {currentSearch && <Blog {...props} />}
+      </section>
+    </>
+  )
+}
 
 /**
  * 文章归档
@@ -206,16 +292,16 @@ const Layout404 = props => {
                   <SVG404 />
                 </div>
                 <h3 className='mb-5 text-2xl font-semibold text-dark dark:text-white'>
-                  {siteConfig('STARTER_404_TITLE')}
+                  {starterConfig('STARTER_404_TITLE')}
                 </h3>
                 <p className='mb-8 text-base text-body-color dark:text-dark-6'>
-                  {siteConfig('STARTER_404_TEXT')}
+                  {starterConfig('STARTER_404_TEXT')}
                 </p>
-                <Link
+                <SmartLink
                   href='/'
                   className='py-3 text-base font-medium text-white transition rounded-md bg-dark px-7 hover:bg-primary'>
-                  {siteConfig('STARTER_404_BACK')}
-                </Link>
+                  {starterConfig('STARTER_404_BACK')}
+                </SmartLink>
               </div>
             </div>
           </div>
@@ -251,14 +337,14 @@ const LayoutPostList = props => {
                 {!slotTitle && (
                   <>
                     <span className='mb-2 block text-lg font-semibold text-primary'>
-                      {siteConfig('STARTER_BLOG_TITLE')}
+                      {starterConfig('STARTER_BLOG_TITLE')}
                     </span>
                     <h2 className='mb-4 text-3xl font-bold text-dark dark:text-white sm:text-4xl md:text-[40px] md:leading-[1.2]'>
-                      {siteConfig('STARTER_BLOG_TEXT_1')}
+                      {starterConfig('STARTER_BLOG_TEXT_1')}
                     </h2>
                     <p
                       dangerouslySetInnerHTML={{
-                        __html: siteConfig('STARTER_BLOG_TEXT_2')
+                        __html: starterConfig('STARTER_BLOG_TEXT_2')
                       }}
                       className='text-base text-body-color dark:text-dark-6'></p>
                   </>
@@ -275,24 +361,24 @@ const LayoutPostList = props => {
                     className='wow fadeInUp group mb-10'
                     data-wow-delay='.1s'>
                     <div className='mb-8 overflow-hidden rounded-[5px]'>
-                      <Link href={item?.href} className='block'>
+                      <SmartLink href={item?.href} className='block'>
                         <img
                           src={item.pageCoverThumbnail}
                           alt={item.title}
                           className='w-full transition group-hover:rotate-6 group-hover:scale-125'
                         />
-                      </Link>
+                      </SmartLink>
                     </div>
                     <div>
                       <span className='mb-6 inline-block rounded-[5px] bg-primary px-4 py-0.5 text-center text-xs font-medium leading-loose text-white'>
                         {item.publishDay}
                       </span>
                       <h3>
-                        <Link
+                        <SmartLink
                           href={item?.href}
                           className='mb-4 inline-block text-xl font-semibold text-dark hover:text-primary dark:text-white dark:hover:text-primary sm:text-2xl lg:text-xl xl:text-2xl'>
                           {item.title}
-                        </Link>
+                        </SmartLink>
                       </h3>
                       <p className='max-w-[370px] text-base text-body-color dark:text-dark-6'>
                         {item.summary}
@@ -328,7 +414,7 @@ const LayoutCategoryIndex = props => {
           className='duration-200 flex flex-wrap justify-center items-center '>
           {categoryOptions?.map(category => {
             return (
-              <Link
+              <SmartLink
                 key={category.name}
                 href={`/category/${category.name}`}
                 passHref
@@ -340,7 +426,7 @@ const LayoutCategoryIndex = props => {
                   <i className='mr-4 fas fa-folder' />
                   {category.name}({category.count})
                 </h2>
-              </Link>
+              </SmartLink>
             )
           })}
         </div>
@@ -369,7 +455,7 @@ const LayoutTagIndex = props => {
           {tagOptions.map(tag => {
             return (
               <div key={tag.name} className='p-2'>
-                <Link
+                <SmartLink
                   key={tag}
                   href={`/tag/${encodeURIComponent(tag.name)}`}
                   passHref
@@ -378,7 +464,7 @@ const LayoutTagIndex = props => {
                     <i className='mr-1 fas fa-tag' />{' '}
                     {tag.name + (tag.count ? `(${tag.count})` : '')}{' '}
                   </div>
-                </Link>
+                </SmartLink>
               </div>
             )
           })}
@@ -394,8 +480,8 @@ const LayoutTagIndex = props => {
  */
 const LayoutSignIn = props => {
   const enableClerk = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
-  const title = siteConfig('STARTER_SIGNIN', '登录')
-  const description = siteConfig(
+  const title = starterConfig('STARTER_SIGNIN', '登录')
+  const description = starterConfig(
     'STARTER_SIGNIN_DESCRITION',
     '这里是演示页面，NotionNext目前不提供会员登录功能'
   )
@@ -425,8 +511,8 @@ const LayoutSignIn = props => {
 const LayoutSignUp = props => {
   const enableClerk = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
 
-  const title = siteConfig('STARTER_SIGNIN', '注册')
-  const description = siteConfig(
+  const title = starterConfig('STARTER_SIGNIN', '注册')
+  const description = starterConfig(
     'STARTER_SIGNIN_DESCRITION',
     '这里是演示页面，NotionNext目前不提供会员注册功能'
   )
@@ -454,6 +540,7 @@ export {
   LayoutArchive,
   LayoutBase,
   LayoutCategoryIndex,
+  LayoutDashboard,
   LayoutIndex,
   LayoutPostList,
   LayoutSearch,

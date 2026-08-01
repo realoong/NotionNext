@@ -1,8 +1,7 @@
 import BLOG from '@/blog.config'
 import { siteConfig } from '@/lib/config'
-import { getGlobalData } from '@/lib/db/getSiteData'
-import { getLayoutByTheme } from '@/themes/theme'
-import { useRouter } from 'next/router'
+import { fetchGlobalAllData } from '@/lib/db/SiteDataApi'
+import { DynamicLayout } from '@/themes/theme'
 
 /**
  * 标签下的文章列表
@@ -10,18 +9,13 @@ import { useRouter } from 'next/router'
  * @returns
  */
 const Tag = props => {
-  // 根据页面路径加载不同Layout文件
-  const Layout = getLayoutByTheme({
-    theme: siteConfig('THEME'),
-    router: useRouter()
-  })
-
-  return <Layout {...props} />
+  const theme = siteConfig('THEME', BLOG.THEME, props.NOTION_CONFIG)
+  return <DynamicLayout theme={theme} layoutName='LayoutPostList' {...props} />
 }
 
 export async function getStaticProps({ params: { tag }, locale }) {
   const from = 'tag-props'
-  const props = await getGlobalData({ from, locale })
+  const props = await fetchGlobalAllData({ from, locale })
 
   // 过滤状态
   props.posts = props.allPages
@@ -32,9 +26,14 @@ export async function getStaticProps({ params: { tag }, locale }) {
   props.postCount = props.posts.length
 
   // 处理分页
-  if (siteConfig('POST_LIST_STYLE') === 'scroll') {
+  const POST_LIST_STYLE = siteConfig(
+    'POST_LIST_STYLE',
+    'page',
+    props?.NOTION_CONFIG
+  )
+  if (POST_LIST_STYLE === 'scroll') {
     // 滚动列表 给前端返回所有数据
-  } else if (siteConfig('POST_LIST_STYLE') === 'page') {
+  } else if (POST_LIST_STYLE === 'page') {
     props.posts = props.posts?.slice(
       0,
       siteConfig('POSTS_PER_PAGE', 12, props?.NOTION_CONFIG)
@@ -61,6 +60,9 @@ export async function getStaticProps({ params: { tag }, locale }) {
  * @param tags
  */
 function getTagNames(tags) {
+  if (!Array.isArray(tags)) {
+    return []
+  }
   const tagNames = []
   tags.forEach(tag => {
     tagNames.push(tag.name)
@@ -70,12 +72,12 @@ function getTagNames(tags) {
 
 export async function getStaticPaths() {
   const from = 'tag-static-path'
-  const { tagOptions } = await getGlobalData({ from })
+  const { tagOptions } = await fetchGlobalAllData({ from })
   const tagNames = getTagNames(tagOptions)
 
   return {
-    paths: Object.keys(tagNames).map(index => ({
-      params: { tag: tagNames[index] }
+    paths: tagNames.map(tag => ({
+      params: { tag }
     })),
     fallback: true
   }
