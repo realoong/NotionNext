@@ -211,7 +211,7 @@ export default function HomePage(props) {
       <section className='loonge-hero'>
         <div className='loonge-container loonge-hero-grid'>
           <div className='loonge-hero-copy'>
-            <h1>{siteConfig('LOONGE_HERO_NAME', '杨龙', CONFIG)}</h1>
+            <h1>{siteConfig('LOONGE_HERO_NAME', '龙哥', CONFIG)}</h1>
             <div className='loonge-hero-line'>AI × Engineering × Life</div>
             <p>{siteConfig('LOONGE_HERO_DESCRIPTION', null, CONFIG)}</p>
             <div className='loonge-actions'>
@@ -235,10 +235,10 @@ export default function HomePage(props) {
               priority
               src={siteConfig(
                 'LOONGE_HERO_IMAGE',
-                '/avatar-loonge.png',
+                '/images/loonge-hero.png',
                 CONFIG
               )}
-              alt='杨龙'
+              alt='龙哥'
               className='loonge-portrait'
             />
           </div>

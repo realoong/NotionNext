@@ -23,8 +23,8 @@ export const Header = () => {
   return (
     <header className='loonge-header'>
       <div className='loonge-container loonge-header-inner'>
-        <SmartLink href='/' className='loonge-brand' aria-label='杨龙首页'>
-          {siteConfig('AUTHOR', '杨龙')}
+        <SmartLink href='/' className='loonge-brand' aria-label='龙哥首页'>
+          {siteConfig('AUTHOR', '龙哥')}
         </SmartLink>
 
         <nav className='loonge-nav' aria-label='主导航'>
