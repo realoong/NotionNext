@@ -257,11 +257,13 @@ export const Style = () => (
     .loonge-portrait {
       position: relative;
       z-index: 1;
-      width: min(86%, 470px);
-      max-height: 455px;
-      object-fit: contain;
-      object-position: bottom;
-      filter: saturate(0.8);
+      width: calc(100% - 56px);
+      height: calc(100% - 56px);
+      max-height: none;
+      margin: 28px 28px 0;
+      object-fit: cover;
+      object-position: center top;
+      filter: grayscale(1) contrast(1.04);
     }
 
     .loonge-section {
@@ -861,6 +863,12 @@ export const Style = () => (
       .loonge-portrait-frame {
         min-height: 390px;
         border-radius: 12px 12px 0 0;
+      }
+
+      .loonge-portrait {
+        width: 100%;
+        height: 100%;
+        margin: 0;
       }
 
       .loonge-actions {
