@@ -263,7 +263,9 @@ export const Style = () => (
       margin: 28px 28px 0;
       object-fit: cover;
       object-position: center 28%;
-      border-radius: 50% / 38%;
+      /* Keep the photo rectangular so it sits cleanly inside the pale card.
+       * Only the four corners are softened; the image itself is not oval-cropped. */
+      border-radius: 24px;
       filter: grayscale(1) contrast(1.04);
       transform: scale(1.14);
       transform-origin: center center;
