@@ -34,7 +34,7 @@ export const Style = () => (
 
     #theme-loonge .container,
     #theme-loonge .loonge-container {
-      width: min(100% - 40px, 1600px);
+      width: min(100% - 40px, 1320px);
       margin-inline: auto;
     }
 
