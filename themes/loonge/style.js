@@ -262,8 +262,11 @@ export const Style = () => (
       max-height: none;
       margin: 28px 28px 0;
       object-fit: cover;
-      object-position: center top;
+      object-position: center 28%;
+      border-radius: 50% / 38%;
       filter: grayscale(1) contrast(1.04);
+      transform: scale(1.14);
+      transform-origin: center center;
     }
 
     .loonge-section {
@@ -878,6 +881,7 @@ export const Style = () => (
         width: 100%;
         height: 100%;
         margin: 0;
+        transform: scale(1.08);
       }
 
       .loonge-actions {
