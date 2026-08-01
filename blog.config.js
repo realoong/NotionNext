@@ -16,18 +16,18 @@ const BLOG = {
   APPEARANCE: process.env.NEXT_PUBLIC_APPEARANCE || 'light', // ['light', 'dark', 'auto'], // light 日间模式 ， dark夜间模式， auto根据时间和主题自动夜间模式
   APPEARANCE_DARK_TIME: process.env.NEXT_PUBLIC_APPEARANCE_DARK_TIME || [18, 6], // 夜间模式起至时间，false时关闭根据时间自动切换夜间模式
 
-  AUTHOR: process.env.NEXT_PUBLIC_AUTHOR || '杨龙', // 您的昵称 例如 tangly1024
-  TITLE: process.env.NEXT_PUBLIC_TITLE || '杨龙 · AI × Engineering × Life',
+  AUTHOR: process.env.NEXT_PUBLIC_AUTHOR || '龙哥', // 您的昵称 例如 tangly1024
+  TITLE: process.env.NEXT_PUBLIC_TITLE || '龙哥 · AI × Engineering × Life',
   DESCRIPTION:
     process.env.NEXT_PUBLIC_DESCRIPTION ||
-    '杨龙的个人数字空间：记录 AI 探索、工程实践、持续学习，以及技术之外的生活。',
+    '龙哥的个人数字空间：记录 AI 探索、工程实践、持续学习，以及技术之外的生活。',
   BIO:
     process.env.NEXT_PUBLIC_BIO ||
     '探索人工智能、工程实践、持续学习与技术之外的生活。', // 作者简介
   LINK: process.env.NEXT_PUBLIC_LINK || 'https://www.110216.xyz', // 网站地址
   KEYWORDS:
     process.env.NEXT_PUBLIC_KEYWORD ||
-    '杨龙,AI,人工智能,AI Agent,软件工程,个人知识系统,生活记录', // 网站关键词 英文逗号隔开
+    '龙哥,AI,人工智能,AI Agent,软件工程,个人知识系统,生活记录', // 网站关键词 英文逗号隔开
   BLOG_FAVICON: process.env.NEXT_PUBLIC_FAVICON || '/favicon.ico', // blog favicon 配置, 默认使用 /public/favicon.ico，支持在线图片，如 https://img.imesong.com/favicon.png
   BEI_AN: process.env.NEXT_PUBLIC_BEI_AN || '', // 备案号 闽ICP备XXXXXX
   BEI_AN_LINK:

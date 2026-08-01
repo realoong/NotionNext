@@ -14,7 +14,7 @@ export const Footer = () => (
     <div className='loonge-container loonge-footer-grid'>
       <div>
         <SmartLink href='/' className='loonge-footer-brand'>
-          {siteConfig('AUTHOR', '杨龙')}
+          {siteConfig('AUTHOR', '龙哥')}
         </SmartLink>
         <p>AI × Engineering × Life</p>
       </div>
