@@ -262,9 +262,9 @@ export const Style = () => (
       /* Let the portrait nearly span the card, while keeping a slim edge of
        * the pale blue frame visible around it. */
       width: calc(100% - 28px);
-      /* Let the source ratio determine the photo height; the frame controls
-       * the overall hero proportions. */
-      height: auto;
+      /* Use the card height so the portrait fills the previously unused
+       * upper space while remaining inside the rounded frame. */
+      height: calc(100% - 56px);
       max-height: none;
       margin: 28px 14px 0;
       object-fit: cover;
