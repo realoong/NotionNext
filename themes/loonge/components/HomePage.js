@@ -3,23 +3,23 @@ import SmartLink from '@/components/SmartLink'
 import { siteConfig } from '@/lib/config'
 import CONFIG from '../config'
 
-const DIRECTIONS = [
+const MODULES = [
   {
     number: '01',
     title: 'AI Explorer',
-    text: '探索前沿 AI 技术，理解智能的边界，并思考其真实价值与影响。',
+    text: '进入 AI、Agent 与技术观察。',
     href: '/tag/AI'
   },
   {
     number: '02',
     title: 'Engineering Practice',
-    text: '以工程思维构建可靠、可扩展的产品，将想法落地为解决方案。',
+    text: '进入工程实践、系统与工具。',
     href: '/category/工程实践'
   },
   {
     number: '03',
     title: 'Life & Growth',
-    text: '保持好奇与学习，在运动、阅读和日常观察中持续成长。',
+    text: '进入阅读、运动与生活记录。',
     href: '/category/生活记录'
   }
 ]
@@ -79,6 +79,25 @@ const Arrow = ({ className = '' }) => (
   >
     <path d='M5 12h14M14 7l5 5-5 5' />
   </svg>
+)
+
+const HeroModules = () => (
+  <nav className='loonge-hero-modules' aria-label='内容模块'>
+    {MODULES.map(item => (
+      <SmartLink
+        key={item.number}
+        href={item.href}
+        className='loonge-hero-module'
+      >
+        <div className='loonge-hero-module-meta'>
+          <span>{item.number}</span>
+          <Arrow className='h-4 w-4' />
+        </div>
+        <h2>{item.title}</h2>
+        <p>{item.text}</p>
+      </SmartLink>
+    ))}
+  </nav>
 )
 
 const SectionHeading = ({ index, title, description, action, href }) => (
@@ -202,39 +221,6 @@ const FeaturedContent = ({ posts }) => {
   )
 }
 
-const CurrentFocus = () => (
-  <section className='loonge-now'>
-    <div className='loonge-container loonge-now-grid'>
-      <div className='loonge-now-intro'>
-        <div>
-          <div className='loonge-index'>NOW /</div>
-          <h2>当前焦点</h2>
-        </div>
-        <p>正在持续关注的三个方向。</p>
-      </div>
-      <div className='loonge-now-list'>
-        {EXPLORATIONS.map(item => (
-          <SmartLink
-            key={item.number}
-            href={item.href}
-            className='loonge-now-item'
-          >
-            <div className='loonge-now-meta'>
-              <span>{item.number}</span>
-              <span className='loonge-now-status'>
-                <span className='loonge-status-dot' aria-hidden='true' />
-                {item.status}
-              </span>
-            </div>
-            <h3>{item.title}</h3>
-            <Arrow className='h-4 w-4' />
-          </SmartLink>
-        ))}
-      </div>
-    </div>
-  </section>
-)
-
 export default function HomePage(props) {
   const posts = getPublishedPosts(props?.allNavPages || props?.posts)
   const latestPosts = posts.slice(0, 4)
@@ -275,28 +261,7 @@ export default function HomePage(props) {
               className='loonge-portrait'
             />
           </div>
-        </div>
-      </section>
-
-      <CurrentFocus />
-
-      <section className='loonge-section loonge-directions'>
-        <div className='loonge-container loonge-directions-grid'>
-          <SectionHeading title='我的方向' />
-          {DIRECTIONS.map(item => (
-            <SmartLink
-              key={item.number}
-              href={item.href}
-              className='loonge-direction'
-            >
-              <div className='loonge-direction-head'>
-                <div className='loonge-number'>{item.number}</div>
-                <Arrow className='loonge-direction-arrow h-5 w-5' />
-              </div>
-              <h3>{item.title}</h3>
-              <p>{item.text}</p>
-            </SmartLink>
-          ))}
+          <HeroModules />
         </div>
       </section>
 
