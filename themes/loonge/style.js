@@ -745,7 +745,7 @@ export const Style = () => (
       min-height: calc(100vh - 76px);
       display: flex;
       align-items: center;
-      padding-block: 34px 42px;
+      padding-block: 10px 42px;
     }
 
     .loonge-about-layout {
