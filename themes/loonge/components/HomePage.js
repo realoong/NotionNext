@@ -211,7 +211,7 @@ export default function HomePage(props) {
       <section className='loonge-hero'>
         <div className='loonge-container loonge-hero-grid'>
           <div className='loonge-hero-copy'>
-            <h1>{siteConfig('LOONGE_HERO_NAME', '龙哥', CONFIG)}</h1>
+            <h1>{siteConfig('LOONGE_HERO_NAME', 'Loong', CONFIG)}</h1>
             <div className='loonge-hero-line'>AI × Engineering × Life</div>
             <p>{siteConfig('LOONGE_HERO_DESCRIPTION', null, CONFIG)}</p>
             <div className='loonge-actions'>
