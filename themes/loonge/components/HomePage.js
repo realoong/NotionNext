@@ -202,6 +202,39 @@ const FeaturedContent = ({ posts }) => {
   )
 }
 
+const CurrentFocus = () => (
+  <section className='loonge-now'>
+    <div className='loonge-container loonge-now-grid'>
+      <div className='loonge-now-intro'>
+        <div>
+          <div className='loonge-index'>NOW /</div>
+          <h2>当前焦点</h2>
+        </div>
+        <p>正在持续关注的三个方向。</p>
+      </div>
+      <div className='loonge-now-list'>
+        {EXPLORATIONS.map(item => (
+          <SmartLink
+            key={item.number}
+            href={item.href}
+            className='loonge-now-item'
+          >
+            <div className='loonge-now-meta'>
+              <span>{item.number}</span>
+              <span className='loonge-now-status'>
+                <span className='loonge-status-dot' aria-hidden='true' />
+                {item.status}
+              </span>
+            </div>
+            <h3>{item.title}</h3>
+            <Arrow className='h-4 w-4' />
+          </SmartLink>
+        ))}
+      </div>
+    </div>
+  </section>
+)
+
 export default function HomePage(props) {
   const posts = getPublishedPosts(props?.allNavPages || props?.posts)
   const latestPosts = posts.slice(0, 4)
@@ -245,6 +278,8 @@ export default function HomePage(props) {
         </div>
       </section>
 
+      <CurrentFocus />
+
       <section className='loonge-section loonge-directions'>
         <div className='loonge-container loonge-directions-grid'>
           <SectionHeading title='我的方向' />
@@ -254,7 +289,10 @@ export default function HomePage(props) {
               href={item.href}
               className='loonge-direction'
             >
-              <div className='loonge-number'>{item.number}</div>
+              <div className='loonge-direction-head'>
+                <div className='loonge-number'>{item.number}</div>
+                <Arrow className='loonge-direction-arrow h-5 w-5' />
+              </div>
               <h3>{item.title}</h3>
               <p>{item.text}</p>
             </SmartLink>
@@ -279,7 +317,8 @@ export default function HomePage(props) {
                 <div className='loonge-track-number'>{item.number}</div>
                 <h3>{item.title}</h3>
                 <p>{item.text}</p>
-                <span className='loonge-text-link'>
+                <span className='loonge-text-link loonge-exploration-status'>
+                  <span className='loonge-status-dot' aria-hidden='true' />
                   {item.status}
                   <Arrow className='h-4 w-4' />
                 </span>
