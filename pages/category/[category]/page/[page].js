@@ -1,6 +1,7 @@
 import BLOG from '@/blog.config'
 import { siteConfig } from '@/lib/config'
 import { fetchGlobalAllData } from '@/lib/db/SiteDataApi'
+import { enrichLifePosts } from '@/lib/db/notion/getLifePostMedia'
 import { DynamicLayout } from '@/themes/theme'
 
 /**
@@ -31,6 +32,10 @@ export async function getStaticProps({ params: { category, page } }) {
     POSTS_PER_PAGE * page
   )
 
+  if (category === '生活记录') {
+    props.posts = await enrichLifePosts(props.posts)
+  }
+
   delete props.allPages
   props.page = page
 
@@ -50,9 +55,11 @@ export async function getStaticProps({ params: { category, page } }) {
 
 export async function getStaticPaths() {
   const from = 'category-paths'
-  const { categoryOptions, allPages, NOTION_CONFIG } = await fetchGlobalAllData({
-    from
-  })
+  const { categoryOptions, allPages, NOTION_CONFIG } = await fetchGlobalAllData(
+    {
+      from
+    }
+  )
   const paths = []
 
   categoryOptions?.forEach(category => {

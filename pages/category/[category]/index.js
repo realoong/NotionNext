@@ -1,6 +1,7 @@
 import BLOG from '@/blog.config'
 import { siteConfig } from '@/lib/config'
 import { fetchGlobalAllData } from '@/lib/db/SiteDataApi'
+import { enrichLifePosts } from '@/lib/db/notion/getLifePostMedia'
 import { DynamicLayout } from '@/themes/theme'
 
 /**
@@ -25,6 +26,10 @@ export async function getStaticProps({ params: { category }, locale }) {
   props.posts = props.posts.filter(
     post => post && post.category && post.category.includes(category)
   )
+
+  if (category === '生活记录') {
+    props.posts = await enrichLifePosts(props.posts)
+  }
 
   // 处理文章页数
   props.postCount = props.posts.length

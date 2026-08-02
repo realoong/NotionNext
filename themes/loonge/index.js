@@ -31,6 +31,8 @@ import { SignInForm } from './components/SignInForm'
 import { SignUpForm } from './components/SignUpForm'
 import { SVG404 } from './components/svg/SVG404'
 import HomePage from './components/HomePage'
+import AboutPage from './components/AboutPage'
+import LifeTimeline from './components/LifeTimeline'
 
 /**
  * 布局框架
@@ -106,6 +108,10 @@ const LayoutSlug = props => {
         <Loading />
       </div>
     )
+  }
+
+  if (aboutRoute) {
+    return <AboutPage />
   }
 
   return (
@@ -262,6 +268,10 @@ const Layout404 = props => {
 const LayoutPostList = props => {
   const { posts, category, tag } = props
   const slotTitle = category || tag
+
+  if (category === '生活记录') {
+    return <LifeTimeline posts={posts} />
+  }
 
   return (
     <>

@@ -8,7 +8,7 @@ const MODULES = [
     number: '01',
     title: '生活',
     text: '记录运动、阅读与日常观察。',
-    href: '#life'
+    href: '/category/生活记录'
   },
   {
     number: '02',

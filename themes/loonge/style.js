@@ -13,8 +13,9 @@ export const Style = () => (
       --loonge-dark: #0b0d12;
       --loonge-dark-soft: #141821;
       --loonge-dark-line: #292f3a;
-      --loonge-display-font: 'Iowan Old Style', 'Baskerville',
-        'Baskerville Old Face', Georgia, 'Times New Roman', serif;
+      --loonge-display-font:
+        'Iowan Old Style', 'Baskerville', 'Baskerville Old Face', Georgia,
+        'Times New Roman', serif;
     }
 
     html {
@@ -735,6 +736,340 @@ export const Style = () => (
       background: var(--loonge-soft);
     }
 
+    .loonge-about-page,
+    .loonge-life-page {
+      padding-block: clamp(72px, 9vw, 132px);
+    }
+
+    .loonge-about-intro,
+    .loonge-life-page-intro {
+      max-width: 760px;
+      padding-bottom: clamp(60px, 8vw, 108px);
+      border-bottom: 1px solid var(--loonge-line);
+    }
+
+    .loonge-about-intro h1,
+    .loonge-life-page-intro h1 {
+      margin: 12px 0 28px;
+      color: var(--loonge-ink);
+      font-size: clamp(3.1rem, 7vw, 6.7rem);
+      line-height: 0.98;
+      font-weight: 760;
+      letter-spacing: -0.075em;
+    }
+
+    .dark .loonge-about-intro h1,
+    .dark .loonge-life-page-intro h1 {
+      color: #fff;
+    }
+
+    .loonge-about-intro p,
+    .loonge-life-page-intro p,
+    .loonge-about-closing p {
+      max-width: 680px;
+      margin-top: 18px;
+      color: var(--loonge-muted);
+      font-size: 1.08rem;
+      line-height: 1.95;
+    }
+
+    .loonge-about-intro .loonge-about-lead {
+      margin-top: 0;
+      color: var(--loonge-ink);
+      font-size: clamp(1.35rem, 2.5vw, 2rem);
+      line-height: 1.4;
+      font-weight: 620;
+    }
+
+    .dark .loonge-about-intro .loonge-about-lead {
+      color: #fff;
+    }
+
+    .loonge-about-section {
+      padding-block: clamp(58px, 7vw, 96px);
+      border-bottom: 1px solid var(--loonge-line);
+    }
+
+    .dark .loonge-about-section,
+    .dark .loonge-about-intro,
+    .dark .loonge-life-page-intro {
+      border-color: var(--loonge-dark-line);
+    }
+
+    .loonge-about-section > h2,
+    .loonge-about-belief h2 {
+      margin: 0 0 38px;
+      color: var(--loonge-ink);
+      font-size: clamp(2rem, 4vw, 3.4rem);
+      line-height: 1.08;
+      font-weight: 760;
+      letter-spacing: -0.06em;
+    }
+
+    .dark .loonge-about-section > h2,
+    .dark .loonge-about-belief h2,
+    .dark .loonge-about-card h3,
+    .dark .loonge-life-entry-card h2 {
+      color: #fff;
+    }
+
+    .loonge-about-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0 64px;
+      border-top: 1px solid var(--loonge-line);
+    }
+
+    .dark .loonge-about-grid {
+      border-color: var(--loonge-dark-line);
+    }
+
+    .loonge-about-card {
+      min-height: 228px;
+      padding: 28px 0 34px;
+      border-bottom: 1px solid var(--loonge-line);
+    }
+
+    .dark .loonge-about-card {
+      border-color: var(--loonge-dark-line);
+    }
+
+    .loonge-about-card-number,
+    .loonge-life-entry-meta {
+      color: var(--loonge-blue);
+      font-size: 0.78rem;
+      font-weight: 720;
+      letter-spacing: 0.02em;
+    }
+
+    .loonge-about-card h3 {
+      margin-top: 30px;
+      color: var(--loonge-ink);
+      font-size: 1.25rem;
+      font-weight: 700;
+    }
+
+    .loonge-about-card p,
+    .loonge-about-belief-copy p {
+      margin-top: 14px;
+      color: var(--loonge-muted);
+      line-height: 1.85;
+    }
+
+    .loonge-about-belief {
+      display: grid;
+      grid-template-columns: minmax(220px, 0.7fr) minmax(0, 1.3fr);
+      gap: 64px;
+      align-items: start;
+    }
+
+    .loonge-about-belief h2 {
+      margin-top: 12px;
+      margin-bottom: 0;
+    }
+
+    .loonge-about-belief-copy {
+      padding-top: 12px;
+    }
+
+    .loonge-about-belief-copy p {
+      margin-top: 0;
+      margin-bottom: 22px;
+      font-size: clamp(1.25rem, 2.3vw, 1.8rem);
+      line-height: 1.65;
+      color: var(--loonge-ink);
+    }
+
+    .dark .loonge-about-belief-copy p {
+      color: #fff;
+    }
+
+    .loonge-about-closing {
+      padding-top: clamp(58px, 7vw, 96px);
+    }
+
+    .loonge-about-closing p:first-child {
+      margin-top: 0;
+      color: var(--loonge-ink);
+      font-size: clamp(1.25rem, 2.4vw, 1.85rem);
+      line-height: 1.7;
+    }
+
+    .dark .loonge-about-closing p:first-child {
+      color: #fff;
+    }
+
+    .loonge-about-closing .loonge-text-link {
+      margin-top: 20px;
+    }
+
+    .loonge-life-page-intro {
+      max-width: 900px;
+    }
+
+    .loonge-life-page-intro p {
+      margin-top: 0;
+    }
+
+    .loonge-life-timeline {
+      position: relative;
+      max-width: 980px;
+      padding-block: 72px 28px;
+    }
+
+    .loonge-life-timeline::before {
+      content: '';
+      position: absolute;
+      top: 72px;
+      bottom: 28px;
+      left: 156px;
+      width: 1px;
+      background: var(--loonge-line);
+    }
+
+    .dark .loonge-life-timeline::before {
+      background: var(--loonge-dark-line);
+    }
+
+    .loonge-life-entry {
+      position: relative;
+      display: grid;
+      grid-template-columns: 130px minmax(0, 1fr);
+      gap: 54px;
+      padding-bottom: 56px;
+    }
+
+    .loonge-life-entry-date {
+      position: relative;
+      padding-top: 6px;
+      color: var(--loonge-muted);
+      font-size: 0.84rem;
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    .loonge-life-entry-date i {
+      position: absolute;
+      top: 7px;
+      right: -32px;
+      width: 9px;
+      height: 9px;
+      border: 3px solid #fff;
+      border-radius: 50%;
+      background: var(--loonge-blue);
+      box-shadow: 0 0 0 1px var(--loonge-blue);
+    }
+
+    .dark .loonge-life-entry-date i {
+      border-color: var(--loonge-dark);
+    }
+
+    .loonge-life-entry-card {
+      padding: 0 0 42px;
+      border-bottom: 1px solid var(--loonge-line);
+    }
+
+    .dark .loonge-life-entry-card {
+      border-color: var(--loonge-dark-line);
+    }
+
+    .loonge-life-entry-card h2 {
+      margin-top: 15px;
+      color: var(--loonge-ink);
+      font-size: clamp(1.45rem, 2.5vw, 2.1rem);
+      line-height: 1.25;
+      font-weight: 720;
+      letter-spacing: -0.04em;
+    }
+
+    .loonge-life-entry-card h2 a:hover {
+      color: var(--loonge-blue);
+    }
+
+    .loonge-life-entry-card > p {
+      max-width: 680px;
+      margin-top: 12px;
+      color: var(--loonge-muted);
+      line-height: 1.85;
+    }
+
+    .loonge-life-entry-card > .loonge-text-link {
+      margin-top: 24px;
+    }
+
+    .loonge-life-entry-media {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .loonge-life-entry-media:has(> :only-child) {
+      grid-template-columns: 1fr;
+    }
+
+    .loonge-life-entry-image,
+    .loonge-life-entry-video {
+      display: block;
+      width: 100%;
+      max-height: 560px;
+      overflow: hidden;
+      border-radius: 12px;
+      background: var(--loonge-soft);
+      object-fit: cover;
+    }
+
+    .loonge-life-entry-media > .loonge-life-entry-image,
+    .loonge-life-entry-media > .loonge-life-entry-video {
+      aspect-ratio: 4 / 3;
+    }
+
+    .loonge-life-entry-media:has(> :only-child) > .loonge-life-entry-image,
+    .loonge-life-entry-media:has(> :only-child) > .loonge-life-entry-video {
+      aspect-ratio: auto;
+      max-height: 560px;
+    }
+
+    .loonge-life-entry-card > .loonge-life-entry-image,
+    .loonge-life-entry-card > .loonge-life-entry-video {
+      margin-top: 18px;
+    }
+
+    .loonge-life-entry-image {
+      height: auto;
+    }
+
+    .loonge-life-entry-video {
+      aspect-ratio: 16 / 9;
+    }
+
+    .loonge-life-empty {
+      margin-left: 184px;
+      padding: 42px;
+      border: 1px solid var(--loonge-line);
+      border-radius: 12px;
+      background: var(--loonge-soft);
+    }
+
+    .dark .loonge-life-empty {
+      border-color: var(--loonge-dark-line);
+      background: var(--loonge-dark-soft);
+    }
+
+    .loonge-life-empty strong {
+      color: var(--loonge-ink);
+      font-size: 1.2rem;
+    }
+
+    .dark .loonge-life-empty strong {
+      color: #fff;
+    }
+
+    .loonge-life-empty p {
+      margin-top: 10px;
+      color: var(--loonge-muted);
+    }
+
     .loonge-footer {
       background: #f6f8fb;
       border-top: 1px solid var(--loonge-line);
@@ -1019,6 +1354,87 @@ export const Style = () => (
       .loonge-featured-empty,
       .loonge-life-grid {
         grid-template-columns: 1fr;
+      }
+
+      .loonge-about-page,
+      .loonge-life-page {
+        padding-block: 58px 72px;
+      }
+
+      .loonge-about-intro,
+      .loonge-life-page-intro {
+        padding-bottom: 58px;
+      }
+
+      .loonge-about-intro h1,
+      .loonge-life-page-intro h1 {
+        font-size: clamp(3.3rem, 17vw, 5.2rem);
+      }
+
+      .loonge-about-intro p,
+      .loonge-life-page-intro p,
+      .loonge-about-closing p {
+        font-size: 1rem;
+        line-height: 1.85;
+      }
+
+      .loonge-about-grid {
+        grid-template-columns: 1fr;
+        gap: 0;
+      }
+
+      .loonge-about-card {
+        min-height: 0;
+      }
+
+      .loonge-about-belief {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .loonge-about-belief h2 {
+        margin-top: 10px;
+      }
+
+      .loonge-about-belief-copy {
+        padding-top: 0;
+      }
+
+      .loonge-life-timeline {
+        padding-top: 50px;
+      }
+
+      .loonge-life-timeline::before {
+        top: 50px;
+        left: 8px;
+        bottom: 28px;
+      }
+
+      .loonge-life-entry {
+        display: block;
+        padding-left: 32px;
+        padding-bottom: 42px;
+      }
+
+      .loonge-life-entry-date {
+        padding-top: 0;
+        text-align: left;
+      }
+
+      .loonge-life-entry-date i {
+        top: 2px;
+        left: -28px;
+        right: auto;
+      }
+
+      .loonge-life-entry-card {
+        padding-top: 18px;
+        padding-bottom: 30px;
+      }
+
+      .loonge-life-empty {
+        margin-left: 32px;
+        padding: 28px;
       }
 
       .loonge-featured-image,
