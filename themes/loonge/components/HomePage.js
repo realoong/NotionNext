@@ -6,27 +6,27 @@ import CONFIG from '../config'
 const MODULES = [
   {
     number: '01',
-    title: '当前探索',
-    text: '跟进 AI Agent、FDE 与知识系统。',
-    href: '#exploration'
+    title: '生活',
+    text: '记录运动、阅读与日常观察。',
+    href: '#life'
   },
   {
     number: '02',
-    title: '精选内容',
+    title: '思考',
     text: '阅读研究、工程与思考记录。',
     href: '#featured'
   },
   {
     number: '03',
-    title: '公开项目',
+    title: '项目',
     text: '查看正在构建的项目与工具。',
     href: '#projects'
   },
   {
     number: '04',
-    title: '生活窗口',
-    text: '了解运动、阅读与日常观察。',
-    href: '#life'
+    title: '探索',
+    text: '跟进 AI Agent、FDE 与知识系统。',
+    href: '#exploration'
   }
 ]
 
@@ -182,7 +182,7 @@ const FeaturedContent = ({ posts }) => {
           )}
         </div>
         <div className='loonge-featured-copy'>
-          <div className='loonge-meta'>{lead.category || '精选内容'}</div>
+          <div className='loonge-meta'>{lead.category || '思考'}</div>
           <h3>{lead.title}</h3>
           <p>{lead.summary || '记录思考、研究与实践中的关键发现。'}</p>
           <div className='loonge-post-foot'>
@@ -270,30 +270,24 @@ export default function HomePage(props) {
         </div>
       </section>
 
-      <section id='exploration' className='loonge-section loonge-exploration'>
-        <div className='loonge-container'>
-          <SectionHeading
-            index='01'
-            title='当前探索'
-            description='面向未来的长期课题，持续深入与验证。'
-          />
-          <div className='loonge-exploration-track'>
-            {EXPLORATIONS.map(item => (
-              <SmartLink
-                key={item.number}
-                href={item.href}
-                className='loonge-exploration-item'
-              >
-                <div className='loonge-track-number'>{item.number}</div>
-                <h3>{item.title}</h3>
-                <p>{item.text}</p>
-                <span className='loonge-text-link loonge-exploration-status'>
-                  <span className='loonge-status-dot' aria-hidden='true' />
-                  {item.status}
-                  <Arrow className='h-4 w-4' />
-                </span>
-              </SmartLink>
-            ))}
+      <section id='life' className='loonge-section loonge-life'>
+        <div className='loonge-container loonge-life-grid'>
+          <div className='loonge-life-copy'>
+            <SectionHeading index='01' title='生活' />
+            <p>
+              乒乓球让我保持专注与节奏，阅读让我看见更大的世界，日常观察提醒我保持好奇与真诚。
+            </p>
+            <SmartLink className='loonge-text-link' href='/category/生活记录'>
+              更多生活记录
+              <Arrow className='h-4 w-4' />
+            </SmartLink>
+          </div>
+          <div className='loonge-life-image'>
+            <LazyImage
+              src='/images/loonge-life.png'
+              alt='书房与乒乓球桌'
+              className='h-full w-full object-cover'
+            />
           </div>
         </div>
       </section>
@@ -302,7 +296,7 @@ export default function HomePage(props) {
         <div className='loonge-container'>
           <SectionHeading
             index='02'
-            title='精选内容'
+            title='思考'
             description='思考、研究与实践的记录。'
             action='查看全部内容'
             href='/archive'
@@ -315,7 +309,7 @@ export default function HomePage(props) {
         <div className='loonge-container'>
           <SectionHeading
             index='03'
-            title='公开项目'
+            title='项目'
             description='一些正在构建的项目与实践。'
             action='访问 GitHub'
             href={siteConfig('CONTACT_GITHUB', 'https://github.com/realoong')}
@@ -339,28 +333,33 @@ export default function HomePage(props) {
         </div>
       </section>
 
-      <section id='life' className='loonge-section loonge-life'>
-        <div className='loonge-container loonge-life-grid'>
-          <div className='loonge-life-copy'>
-            <SectionHeading index='04' title='生活窗口' />
-            <p>
-              乒乓球让我保持专注与节奏，阅读让我看见更大的世界，日常观察提醒我保持好奇与真诚。
-            </p>
-            <SmartLink className='loonge-text-link' href='/category/生活记录'>
-              更多生活记录
-              <Arrow className='h-4 w-4' />
-            </SmartLink>
-          </div>
-          <div className='loonge-life-image'>
-            <LazyImage
-              src='/images/loonge-life.png'
-              alt='书房与乒乓球桌'
-              className='h-full w-full object-cover'
-            />
+      <section id='exploration' className='loonge-section loonge-exploration'>
+        <div className='loonge-container'>
+          <SectionHeading
+            index='04'
+            title='探索'
+            description='面向未来的长期课题，持续深入与验证。'
+          />
+          <div className='loonge-exploration-track'>
+            {EXPLORATIONS.map(item => (
+              <SmartLink
+                key={item.number}
+                href={item.href}
+                className='loonge-exploration-item'
+              >
+                <div className='loonge-track-number'>{item.number}</div>
+                <h3>{item.title}</h3>
+                <p>{item.text}</p>
+                <span className='loonge-text-link loonge-exploration-status'>
+                  <span className='loonge-status-dot' aria-hidden='true' />
+                  {item.status}
+                  <Arrow className='h-4 w-4' />
+                </span>
+              </SmartLink>
+            ))}
           </div>
         </div>
       </section>
-
     </div>
   )
 }
