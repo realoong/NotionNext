@@ -741,11 +741,36 @@ export const Style = () => (
       padding-block: clamp(72px, 9vw, 132px);
     }
 
+    .loonge-about-page {
+      min-height: calc(100vh - 76px);
+      display: flex;
+      align-items: center;
+      padding-block: 34px 42px;
+    }
+
+    .loonge-about-layout {
+      display: grid;
+      grid-template-columns: minmax(280px, 0.72fr) minmax(0, 1.28fr);
+      grid-template-areas:
+        'intro focus'
+        'belief closing';
+      column-gap: clamp(44px, 7vw, 108px);
+      row-gap: 26px;
+      align-items: start;
+    }
+
     .loonge-about-intro,
     .loonge-life-page-intro {
       max-width: 760px;
       padding-bottom: clamp(60px, 8vw, 108px);
       border-bottom: 1px solid var(--loonge-line);
+    }
+
+    .loonge-about-intro {
+      grid-area: intro;
+      max-width: none;
+      padding: 0;
+      border: 0;
     }
 
     .loonge-about-intro h1,
@@ -756,6 +781,11 @@ export const Style = () => (
       line-height: 0.98;
       font-weight: 760;
       letter-spacing: -0.075em;
+    }
+
+    .loonge-about-intro h1 {
+      margin: 8px 0 18px;
+      font-size: clamp(3.6rem, 5.5vw, 5.6rem);
     }
 
     .dark .loonge-about-intro h1,
@@ -773,10 +803,16 @@ export const Style = () => (
       line-height: 1.95;
     }
 
+    .loonge-about-intro p {
+      margin-top: 12px;
+      font-size: 0.95rem;
+      line-height: 1.65;
+    }
+
     .loonge-about-intro .loonge-about-lead {
       margin-top: 0;
       color: var(--loonge-ink);
-      font-size: clamp(1.35rem, 2.5vw, 2rem);
+      font-size: clamp(1.15rem, 1.7vw, 1.55rem);
       line-height: 1.4;
       font-weight: 620;
     }
@@ -788,6 +824,12 @@ export const Style = () => (
     .loonge-about-section {
       padding-block: clamp(58px, 7vw, 96px);
       border-bottom: 1px solid var(--loonge-line);
+    }
+
+    .loonge-about-focus {
+      grid-area: focus;
+      padding: 0;
+      border: 0;
     }
 
     .dark .loonge-about-section,
@@ -806,6 +848,12 @@ export const Style = () => (
       letter-spacing: -0.06em;
     }
 
+    .loonge-about-focus > h2,
+    .loonge-about-belief h2 {
+      margin-bottom: 20px;
+      font-size: clamp(1.65rem, 2.4vw, 2.45rem);
+    }
+
     .dark .loonge-about-section > h2,
     .dark .loonge-about-belief h2,
     .dark .loonge-about-card h3,
@@ -820,6 +868,10 @@ export const Style = () => (
       border-top: 1px solid var(--loonge-line);
     }
 
+    .loonge-about-focus .loonge-about-grid {
+      gap: 0 28px;
+    }
+
     .dark .loonge-about-grid {
       border-color: var(--loonge-dark-line);
     }
@@ -828,6 +880,11 @@ export const Style = () => (
       min-height: 228px;
       padding: 28px 0 34px;
       border-bottom: 1px solid var(--loonge-line);
+    }
+
+    .loonge-about-focus .loonge-about-card {
+      min-height: 0;
+      padding: 16px 0 18px;
     }
 
     .dark .loonge-about-card {
@@ -849,6 +906,11 @@ export const Style = () => (
       font-weight: 700;
     }
 
+    .loonge-about-focus .loonge-about-card h3 {
+      margin-top: 16px;
+      font-size: 1rem;
+    }
+
     .loonge-about-card p,
     .loonge-about-belief-copy p {
       margin-top: 14px;
@@ -856,11 +918,21 @@ export const Style = () => (
       line-height: 1.85;
     }
 
+    .loonge-about-focus .loonge-about-card p {
+      margin-top: 8px;
+      font-size: 0.86rem;
+      line-height: 1.55;
+    }
+
     .loonge-about-belief {
+      grid-area: belief;
       display: grid;
       grid-template-columns: minmax(220px, 0.7fr) minmax(0, 1.3fr);
       gap: 64px;
       align-items: start;
+      padding-block: 20px 0;
+      border-top: 1px solid var(--loonge-line);
+      border-bottom: 0;
     }
 
     .loonge-about-belief h2 {
@@ -880,12 +952,28 @@ export const Style = () => (
       color: var(--loonge-ink);
     }
 
+    .loonge-about-belief-copy {
+      padding-top: 0;
+    }
+
+    .loonge-about-belief-copy p {
+      margin-bottom: 10px;
+      font-size: 1rem;
+      line-height: 1.55;
+    }
+
     .dark .loonge-about-belief-copy p {
       color: #fff;
     }
 
     .loonge-about-closing {
+      grid-area: closing;
       padding-top: clamp(58px, 7vw, 96px);
+    }
+
+    .loonge-about-layout > .loonge-about-closing {
+      padding-top: 20px;
+      border-top: 1px solid var(--loonge-line);
     }
 
     .loonge-about-closing p:first-child {
@@ -893,6 +981,15 @@ export const Style = () => (
       color: var(--loonge-ink);
       font-size: clamp(1.25rem, 2.4vw, 1.85rem);
       line-height: 1.7;
+    }
+
+    .loonge-about-layout > .loonge-about-closing p:first-child {
+      font-size: 1rem;
+      line-height: 1.55;
+    }
+
+    .loonge-about-layout > .loonge-about-closing p {
+      margin-top: 10px;
     }
 
     .dark .loonge-about-closing p:first-child {
@@ -1361,6 +1458,20 @@ export const Style = () => (
         padding-block: 58px 72px;
       }
 
+      .loonge-about-page {
+        display: block;
+      }
+
+      .loonge-about-layout {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+          'intro'
+          'focus'
+          'belief'
+          'closing';
+        row-gap: 0;
+      }
+
       .loonge-about-intro,
       .loonge-life-page-intro {
         padding-bottom: 58px;
@@ -1383,6 +1494,11 @@ export const Style = () => (
         gap: 0;
       }
 
+      .loonge-about-focus {
+        padding-block: 58px;
+        border-bottom: 1px solid var(--loonge-line);
+      }
+
       .loonge-about-card {
         min-height: 0;
       }
@@ -1390,6 +1506,9 @@ export const Style = () => (
       .loonge-about-belief {
         grid-template-columns: 1fr;
         gap: 20px;
+        padding-block: 58px;
+        border-top: 0;
+        border-bottom: 1px solid var(--loonge-line);
       }
 
       .loonge-about-belief h2 {
@@ -1398,6 +1517,11 @@ export const Style = () => (
 
       .loonge-about-belief-copy {
         padding-top: 0;
+      }
+
+      .loonge-about-layout > .loonge-about-closing {
+        padding-top: 58px;
+        border-top: 0;
       }
 
       .loonge-life-timeline {

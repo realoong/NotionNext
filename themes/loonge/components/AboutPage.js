@@ -27,7 +27,7 @@ const ABOUT_SECTIONS = [
 export default function AboutPage() {
   return (
     <main className='loonge-about-page'>
-      <div className='loonge-container'>
+      <div className='loonge-container loonge-about-layout'>
         <header className='loonge-about-intro'>
           <div className='loonge-index'>ABOUT /</div>
           <h1>关于龙哥</h1>
@@ -41,7 +41,10 @@ export default function AboutPage() {
         </header>
 
         {ABOUT_SECTIONS.map(section => (
-          <section key={section.title} className='loonge-about-section'>
+          <section
+            key={section.title}
+            className='loonge-about-section loonge-about-focus'
+          >
             <h2>{section.title}</h2>
             <div className='loonge-about-grid'>
               {section.items.map((item, index) => (

@@ -1,6 +1,16 @@
 import LazyImage from '@/components/LazyImage'
 import SmartLink from '@/components/SmartLink'
 
+const DEFAULT_LIFE_ENTRY = {
+  id: 'homepage-refresh-note',
+  title: '今天，先给自己的小站发条朋友圈',
+  publishDay: '2026.08.02',
+  publishDate: new Date('2026-08-02T12:00:00+08:00').getTime(),
+  summary:
+    '今天给个人首页做了次“大扫除”：模块重新排了排，照片换了张顺眼的，连“生活”也单独留了个位置。折腾到最后发现，做网站和收拾房间差不多——本来只想挪个小东西，最后连墙都想刷一遍。以后这里就当我的小朋友圈吧，想到什么记什么，看到什么拍什么，偶尔发点不太正经的碎碎念。先把第一条发出来，给今天留个脚印。',
+  href: '/'
+}
+
 const getPostTime = post => {
   const value =
     post?.publishDate || post?.date?.start_date || post?.lastEditedDate
@@ -72,7 +82,10 @@ const LifeEntryMedia = ({ post }) => {
 }
 
 export default function LifeTimeline({ posts = [] }) {
-  const entries = [...posts].sort((a, b) => getPostTime(b) - getPostTime(a))
+  const hasDefaultEntry = posts.some(post => post?.id === DEFAULT_LIFE_ENTRY.id)
+  const entries = [
+    ...(hasDefaultEntry ? posts : [...posts, DEFAULT_LIFE_ENTRY])
+  ].sort((a, b) => getPostTime(b) - getPostTime(a))
 
   return (
     <main className='loonge-life-page'>
@@ -80,7 +93,7 @@ export default function LifeTimeline({ posts = [] }) {
         <header className='loonge-life-page-intro'>
           <div className='loonge-index'>LIFE /</div>
           <h1>生活</h1>
-          <p>记录运动、阅读、日常观察，以及那些值得留下来的瞬间。</p>
+          <p>这里就当我的小朋友圈，想到什么记什么，先留下来再说。</p>
         </header>
 
         <div className='loonge-life-timeline'>
