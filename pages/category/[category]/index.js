@@ -54,10 +54,13 @@ export async function getStaticProps({ params: { category }, locale }) {
   if (POST_LIST_STYLE === 'scroll') {
     // 滚动列表 给前端返回所有数据
   } else if (POST_LIST_STYLE === 'page') {
-    props.posts = props.posts?.slice(
-      0,
-      siteConfig('POSTS_PER_PAGE', 12, props?.NOTION_CONFIG)
-    )
+    // 生活页是时间线，需要一次展示完整迁移记录；其它分类继续按常规分页。
+    if (category !== '生活记录') {
+      props.posts = props.posts?.slice(
+        0,
+        siteConfig('POSTS_PER_PAGE', 12, props?.NOTION_CONFIG)
+      )
+    }
   }
 
   delete props.allPages
