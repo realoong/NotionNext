@@ -1096,6 +1096,7 @@ export const Style = () => (
       margin-top: 12px;
       color: var(--loonge-muted);
       line-height: 1.85;
+      white-space: pre-line;
     }
 
     .loonge-life-entry-card > .loonge-text-link {

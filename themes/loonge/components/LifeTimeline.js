@@ -7,7 +7,7 @@ const DEFAULT_LIFE_ENTRY = {
   publishDay: '2026.08.02',
   publishDate: new Date('2026-08-02T12:00:00+08:00').getTime(),
   summary:
-    '本来只是想给首页换张照片，结果一不小心把整个页面都重新收拾了一遍。导航挪了，照片换了，也终于给“生活”留了个位置。以后这里就当我的小朋友圈，想到什么就记一笔，别管长短。先发第一条，算是给今天的折腾留个证据。'
+    '今天折腾了一下个人首页，原本只是想换张照片，结果导航、模块、照片一起动了个遍。做完看着还行，至少以后想写点什么有地方放了。先记一笔，免得过两天又忘了自己今天都折腾了啥。'
 }
 
 const getPostTime = post => {
@@ -131,7 +131,7 @@ export default function LifeTimeline({ posts = [] }) {
         <header className='loonge-life-page-intro'>
           <div className='loonge-index'>LIFE /</div>
           <h1>生活</h1>
-          <p>这里就当我的小朋友圈，想到什么记什么，先留下来再说。</p>
+          <p>记录运动、阅读，以及那些当下想到的事。</p>
         </header>
 
         <div className='loonge-life-timeline'>

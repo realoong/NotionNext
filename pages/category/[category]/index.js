@@ -3,6 +3,7 @@ import { siteConfig } from '@/lib/config'
 import { fetchGlobalAllData } from '@/lib/db/SiteDataApi'
 import { enrichLifePosts } from '@/lib/db/notion/getLifePostMedia'
 import { isLifePost } from '@/lib/db/notion/lifeCategories'
+import { fetchLegacyLifeNotes } from '@/lib/db/notion/legacyLifeNotes'
 import { DynamicLayout } from '@/themes/theme'
 
 /**
@@ -24,11 +25,19 @@ export async function getStaticProps({ params: { category }, locale }) {
     page => page.type === 'Post' && page.status === 'Published'
   )
   // 生活页兼容之前使用过的“碎碎念 / 心情随笔 / 随笔”等分类。
-  props.posts = publishedPosts.filter(post =>
-    category === '生活记录'
-      ? isLifePost(post)
-      : post && post.category && post.category.includes(category)
-  )
+  if (category === '生活记录') {
+    const currentLifePosts = publishedPosts.filter(isLifePost)
+    const legacyLifePosts = await fetchLegacyLifeNotes()
+    const currentIds = new Set(currentLifePosts.map(post => post?.id))
+    props.posts = [
+      ...currentLifePosts,
+      ...legacyLifePosts.filter(post => !currentIds.has(post?.id))
+    ]
+  } else {
+    props.posts = publishedPosts.filter(
+      post => post && post.category && post.category.includes(category)
+    )
+  }
 
   if (category === '生活记录') {
     props.posts = await enrichLifePosts(props.posts)
