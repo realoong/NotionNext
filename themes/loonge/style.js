@@ -13,8 +13,8 @@ export const Style = () => (
       --loonge-dark: #0b0d12;
       --loonge-dark-soft: #141821;
       --loonge-dark-line: #292f3a;
-      --loonge-display-font: 'Avenir Next Rounded', 'Avenir Next',
-        'SF Pro Rounded', 'Helvetica Neue', Arial, sans-serif;
+      --loonge-display-font: 'Iowan Old Style', 'Baskerville',
+        'Baskerville Old Face', Georgia, 'Times New Roman', serif;
     }
 
     html {
@@ -148,7 +148,7 @@ export const Style = () => (
       line-height: 0.92;
       font-family: var(--loonge-display-font);
       font-weight: 700;
-      letter-spacing: -0.065em;
+      letter-spacing: -0.045em;
     }
 
     .dark .loonge-hero-copy h1 {
@@ -162,7 +162,7 @@ export const Style = () => (
       line-height: 1.1;
       font-family: var(--loonge-display-font);
       font-weight: 600;
-      letter-spacing: -0.055em;
+      letter-spacing: -0.03em;
     }
 
     .dark .loonge-hero-line {
