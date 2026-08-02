@@ -926,10 +926,7 @@ export const Style = () => (
 
     .loonge-about-belief {
       grid-area: belief;
-      display: grid;
-      grid-template-columns: minmax(220px, 0.7fr) minmax(0, 1.3fr);
-      gap: 64px;
-      align-items: start;
+      display: block;
       padding-block: 20px 0;
       border-top: 1px solid var(--loonge-line);
       border-bottom: 0;
@@ -954,6 +951,7 @@ export const Style = () => (
 
     .loonge-about-belief-copy {
       padding-top: 0;
+      margin-top: 12px;
     }
 
     .loonge-about-belief-copy p {
