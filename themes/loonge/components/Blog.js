@@ -14,9 +14,9 @@ export const Blog = ({ posts }) => {
   if (!enable) {
     return null
   }
-  const autoShowCover = siteConfig('PROXIO_BLOG_AUTO_SHOW_COVER', false, CONFIG)
+  const autoShowCover = siteConfig('PROXIO_BLOG_AUTO_SHOW_COVER', true, CONFIG)
 
-  // 博客列表默认显示summary文字，当鼠标指向时显示文章封面。这里可选把summary文字替换成图片占位符。
+  // 博客列表默认显示文章封面；如果关闭开关，则回退到悬浮显示的旧样式。
   const PROXIO_BLOG_PLACEHOLDER_IMG_URL_1 = siteConfig(
     'PROXIO_BLOG_PLACEHOLDER_IMG_URL_1'
   )

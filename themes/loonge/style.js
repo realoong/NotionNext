@@ -294,7 +294,7 @@ export const Style = () => (
     .loonge-hero-modules {
       grid-column: 1 / -1;
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(4, 1fr);
       border-top: 1px solid var(--loonge-line);
     }
 
@@ -373,6 +373,10 @@ export const Style = () => (
       border-bottom: 1px solid var(--loonge-line);
     }
 
+    .loonge-about-article .notion-asset-wrapper-image {
+      display: none;
+    }
+
     .dark .loonge-section {
       border-color: var(--loonge-dark-line);
     }
@@ -397,8 +401,7 @@ export const Style = () => (
     .dark .loonge-section-heading h2,
     .dark .loonge-exploration-item h3,
     .dark .loonge-featured h3,
-    .dark .loonge-project-row h3,
-    .dark .loonge-latest-row h3 {
+    .dark .loonge-project-row h3 {
       color: #fff;
     }
 
@@ -431,14 +434,12 @@ export const Style = () => (
     }
 
     .loonge-text-link svg,
-    .loonge-project-row svg,
-    .loonge-latest-row svg {
+    .loonge-project-row svg {
       transition: transform 180ms ease;
     }
 
     .loonge-text-link:hover svg,
-    .loonge-project-row:hover svg,
-    .loonge-latest-row:hover svg {
+    .loonge-project-row:hover svg {
       transform: translateX(4px);
     }
 
@@ -734,65 +735,6 @@ export const Style = () => (
       background: var(--loonge-soft);
     }
 
-    .loonge-latest-grid {
-      display: grid;
-      grid-template-columns: minmax(250px, 0.58fr) minmax(0, 1.75fr);
-      gap: clamp(44px, 7vw, 100px);
-    }
-
-    .loonge-latest-grid > .loonge-section-heading {
-      display: block;
-      margin: 0;
-    }
-
-    .loonge-latest-grid > .loonge-section-heading .loonge-text-link {
-      margin-top: 34px;
-    }
-
-    .loonge-latest-list {
-      border-top: 1px solid var(--loonge-line);
-    }
-
-    .dark .loonge-latest-list,
-    .dark .loonge-latest-row {
-      border-color: var(--loonge-dark-line);
-    }
-
-    .loonge-latest-row {
-      display: grid;
-      grid-template-columns: 130px 90px 1fr 24px;
-      gap: 28px;
-      align-items: center;
-      min-height: 86px;
-      border-bottom: 1px solid var(--loonge-line);
-    }
-
-    .loonge-latest-row > span {
-      color: var(--loonge-muted);
-      font-size: 0.88rem;
-    }
-
-    .loonge-latest-row > span:nth-child(2) {
-      color: var(--loonge-blue);
-    }
-
-    .loonge-latest-row h3 {
-      color: var(--loonge-ink);
-      font-size: 1rem;
-      font-weight: 580;
-    }
-
-    .loonge-latest-empty {
-      min-height: 180px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 24px;
-      padding: 30px 0;
-      color: var(--loonge-muted);
-      border-bottom: 1px solid var(--loonge-line);
-    }
-
     .loonge-footer {
       background: #f6f8fb;
       border-top: 1px solid var(--loonge-line);
@@ -1075,8 +1017,7 @@ export const Style = () => (
 
       .loonge-featured-lead,
       .loonge-featured-empty,
-      .loonge-life-grid,
-      .loonge-latest-grid {
+      .loonge-life-grid {
         grid-template-columns: 1fr;
       }
 
@@ -1114,39 +1055,6 @@ export const Style = () => (
       .loonge-life-image {
         height: 330px;
         order: -1;
-      }
-
-      .loonge-latest-grid {
-        gap: 40px;
-      }
-
-      .loonge-latest-row {
-        grid-template-columns: 1fr auto;
-        gap: 8px 20px;
-        padding-block: 22px;
-      }
-
-      .loonge-latest-row > span:first-child {
-        grid-column: 1;
-      }
-
-      .loonge-latest-row > span:nth-child(2) {
-        grid-column: 2;
-      }
-
-      .loonge-latest-row h3 {
-        grid-column: 1;
-        grid-row: 2;
-      }
-
-      .loonge-latest-row svg {
-        grid-column: 2;
-        grid-row: 2;
-      }
-
-      .loonge-latest-empty {
-        align-items: flex-start;
-        flex-direction: column;
       }
 
       .loonge-footer-grid {

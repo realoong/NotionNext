@@ -6,21 +6,27 @@ import CONFIG from '../config'
 const MODULES = [
   {
     number: '01',
-    title: 'AI Explorer',
-    text: '进入 AI、Agent 与技术观察。',
-    href: '/tag/AI'
+    title: '当前探索',
+    text: '跟进 AI Agent、FDE 与知识系统。',
+    href: '#exploration'
   },
   {
     number: '02',
-    title: 'Engineering Practice',
-    text: '进入工程实践、系统与工具。',
-    href: '/category/工程实践'
+    title: '精选内容',
+    text: '阅读研究、工程与思考记录。',
+    href: '#featured'
   },
   {
     number: '03',
-    title: 'Life & Growth',
-    text: '进入阅读、运动与生活记录。',
-    href: '/category/生活记录'
+    title: '公开项目',
+    text: '查看正在构建的项目与工具。',
+    href: '#projects'
+  },
+  {
+    number: '04',
+    title: '生活窗口',
+    text: '了解运动、阅读与日常观察。',
+    href: '#life'
   }
 ]
 
@@ -223,7 +229,6 @@ const FeaturedContent = ({ posts }) => {
 
 export default function HomePage(props) {
   const posts = getPublishedPosts(props?.allNavPages || props?.posts)
-  const latestPosts = posts.slice(0, 4)
 
   return (
     <div className='loonge-home'>
@@ -293,7 +298,7 @@ export default function HomePage(props) {
         </div>
       </section>
 
-      <section className='loonge-section loonge-featured-section'>
+      <section id='featured' className='loonge-section loonge-featured-section'>
         <div className='loonge-container'>
           <SectionHeading
             index='02'
@@ -306,9 +311,10 @@ export default function HomePage(props) {
         </div>
       </section>
 
-      <section className='loonge-section loonge-projects'>
+      <section id='projects' className='loonge-section loonge-projects'>
         <div className='loonge-container'>
           <SectionHeading
+            index='03'
             title='公开项目'
             description='一些正在构建的项目与实践。'
             action='访问 GitHub'
@@ -333,10 +339,10 @@ export default function HomePage(props) {
         </div>
       </section>
 
-      <section className='loonge-section loonge-life'>
+      <section id='life' className='loonge-section loonge-life'>
         <div className='loonge-container loonge-life-grid'>
           <div className='loonge-life-copy'>
-            <SectionHeading index='03' title='生活窗口' />
+            <SectionHeading index='04' title='生活窗口' />
             <p>
               乒乓球让我保持专注与节奏，阅读让我看见更大的世界，日常观察提醒我保持好奇与真诚。
             </p>
@@ -355,43 +361,6 @@ export default function HomePage(props) {
         </div>
       </section>
 
-      <section className='loonge-section loonge-latest'>
-        <div className='loonge-container loonge-latest-grid'>
-          <SectionHeading
-            index='04'
-            title='最新记录'
-            description='记录思考，沉淀过程，分享真实的实践与见解。'
-            action='查看全部记录'
-            href='/archive'
-          />
-          <div className='loonge-latest-list'>
-            {latestPosts.length ? (
-              latestPosts.map(post => (
-                <SmartLink
-                  key={post.id || post.slug}
-                  href={getPostHref(post)}
-                  className='loonge-latest-row'
-                >
-                  <span>
-                    {post.publishDay || post.lastEditedDay || '最近更新'}
-                  </span>
-                  <span>{post.category || '记录'}</span>
-                  <h3>{post.title}</h3>
-                  <Arrow className='h-5 w-5' />
-                </SmartLink>
-              ))
-            ) : (
-              <div className='loonge-latest-empty'>
-                <span>内容连接后，最新文章会自动出现在这里。</span>
-                <SmartLink className='loonge-text-link' href='/archive'>
-                  浏览归档
-                  <Arrow className='h-4 w-4' />
-                </SmartLink>
-              </div>
-            )}
-          </div>
-        </div>
-      </section>
     </div>
   )
 }

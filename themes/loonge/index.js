@@ -90,6 +90,7 @@ const LayoutSlug = props => {
 
   // 如果 是 /article/[slug] 的文章路径则視情況进行重定向到另一个域名
   const router = useRouter()
+  const aboutRoute = /(^|\/)about$/.test(router.asPath.split('?')[0])
   if (
     !post &&
     siteConfig('PROXIO_POST_REDIRECT_ENABLE') &&
@@ -109,14 +110,20 @@ const LayoutSlug = props => {
 
   return (
     <>
-      <Banner title={post?.title} description={post?.summary} />
+      <Banner
+        title={post?.title}
+        description={aboutRoute ? null : post?.summary}
+      />
       <div className='container grow'>
         <div className='flex flex-wrap justify-center -mx-4'>
           <div id='container-inner' className='w-full p-4'>
             {lock && <ArticleLock validPassword={validPassword} />}
 
             {!lock && post && (
-              <div id='article-wrapper' className='mx-auto'>
+              <div
+                id='article-wrapper'
+                className={`mx-auto ${aboutRoute ? 'loonge-about-article' : ''}`}
+              >
                 <NotionPage {...props} />
                 <Comment frontMatter={post} />
                 <ShareBar post={post} />
@@ -178,7 +185,7 @@ const LayoutSearch = props => {
         }
       })
     }
-  }, [])
+  }, [keyword])
   return (
     <>
       <section className='max-w-7xl mx-auto bg-white pb-10 pt-20 dark:bg-dark lg:pb-20 lg:pt-[120px]'>

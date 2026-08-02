@@ -15,9 +15,11 @@ export const Banner = ({ title, description }) => {
                 <h1 className='mb-4 text-3xl font-bold text-dark dark:text-white sm:text-4xl md:text-[40px] md:leading-[1.2]'>
                   {title}
                 </h1>
-                <p className='mb-5 text-base text-body-color dark:text-dark-6'>
-                  {description}
-                </p>
+                {description ? (
+                  <p className='mb-5 text-base text-body-color dark:text-dark-6'>
+                    {description}
+                  </p>
+                ) : null}
 
                 {/* <ul className="flex items-center justify-center gap-[10px]">
                 <li>
