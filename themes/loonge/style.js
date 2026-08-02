@@ -257,24 +257,17 @@ export const Style = () => (
     }
 
     .loonge-portrait {
-      position: relative;
+      position: absolute;
+      inset: 0;
       z-index: 1;
-      /* Let the portrait nearly span the card, while keeping a slim edge of
-       * the pale blue frame visible around it. */
-      width: calc(100% - 28px);
-      /* Use the card height so the portrait fills the previously unused
-       * upper space while remaining inside the rounded frame. */
-      height: calc(100% - 56px);
-      max-height: none;
-      margin: 28px 14px 0;
+      width: 100%;
+      height: 100%;
+      margin: 0;
       object-fit: cover;
       object-position: center 28%;
-      /* Keep the photo rectangular so it sits cleanly inside the pale card.
-       * Only the four corners are softened; the image itself is not oval-cropped. */
-      border-radius: 24px;
+      /* Use the same rounded corners as the card while covering every edge. */
+      border-radius: inherit;
       filter: grayscale(1) contrast(1.04);
-      transform: scale(1.02);
-      transform-origin: center center;
     }
 
     .loonge-section {
@@ -891,7 +884,7 @@ export const Style = () => (
         width: 100%;
         height: 100%;
         margin: 0;
-        transform: scale(1.08);
+        transform: none;
       }
 
       .loonge-actions {
