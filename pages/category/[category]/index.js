@@ -2,6 +2,7 @@ import BLOG from '@/blog.config'
 import { siteConfig } from '@/lib/config'
 import { fetchGlobalAllData } from '@/lib/db/SiteDataApi'
 import { enrichLifePosts } from '@/lib/db/notion/getLifePostMedia'
+import { isLifePost } from '@/lib/db/notion/lifeCategories'
 import { DynamicLayout } from '@/themes/theme'
 
 /**
@@ -19,12 +20,14 @@ export async function getStaticProps({ params: { category }, locale }) {
   let props = await fetchGlobalAllData({ from, locale })
 
   // 过滤状态
-  props.posts = props.allPages?.filter(
+  const publishedPosts = props.allPages?.filter(
     page => page.type === 'Post' && page.status === 'Published'
   )
-  // 处理过滤
-  props.posts = props.posts.filter(
-    post => post && post.category && post.category.includes(category)
+  // 生活页兼容之前使用过的“碎碎念 / 心情随笔 / 随笔”等分类。
+  props.posts = publishedPosts.filter(post =>
+    category === '生活记录'
+      ? isLifePost(post)
+      : post && post.category && post.category.includes(category)
   )
 
   if (category === '生活记录') {

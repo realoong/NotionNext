@@ -7,25 +7,25 @@ const MODULES = [
   {
     number: '01',
     title: '生活',
-    text: '记录运动、阅读与日常观察。',
+    text: '记录运动、阅读与日常观察，留下真实的生活片段。',
     href: '/category/生活记录'
   },
   {
     number: '02',
     title: '思考',
-    text: '阅读研究、工程与思考记录。',
+    text: '记录阅读、研究与实践中的想法和判断。',
     href: '#featured'
   },
   {
     number: '03',
     title: '项目',
-    text: '查看正在构建的项目与工具。',
+    text: '把想法做成可以使用的项目与工具。',
     href: '#projects'
   },
   {
     number: '04',
     title: '探索',
-    text: '跟进 AI Agent、FDE 与知识系统。',
+    text: '持续跟进 AI Agent、FDE 与知识系统。',
     href: '#exploration'
   }
 ]
@@ -106,11 +106,27 @@ const HeroModules = () => (
   </nav>
 )
 
-const SectionHeading = ({ index, title, description, action, href }) => (
+const SectionHeading = ({
+  index,
+  title,
+  description,
+  action,
+  href,
+  titleHref
+}) => (
   <div className='loonge-section-heading'>
     <div>
-      {index ? <div className='loonge-index'>{index} /</div> : null}
-      <h2>{title}</h2>
+      {titleHref ? (
+        <SmartLink className='loonge-section-heading-title' href={titleHref}>
+          {index ? <div className='loonge-index'>{index} /</div> : null}
+          <h2>{title}</h2>
+        </SmartLink>
+      ) : (
+        <>
+          {index ? <div className='loonge-index'>{index} /</div> : null}
+          <h2>{title}</h2>
+        </>
+      )}
       {description ? <p>{description}</p> : null}
     </div>
     {action && href ? (
@@ -273,22 +289,26 @@ export default function HomePage(props) {
       <section id='life' className='loonge-section loonge-life'>
         <div className='loonge-container loonge-life-grid'>
           <div className='loonge-life-copy'>
-            <SectionHeading index='01' title='生活' />
+            <SectionHeading
+              index='01'
+              title='生活'
+              titleHref='/category/生活记录'
+            />
             <p>
               乒乓球让我保持专注与节奏，阅读让我看见更大的世界，日常观察提醒我保持好奇与真诚。
             </p>
-            <SmartLink className='loonge-text-link' href='/category/生活记录'>
-              更多生活记录
-              <Arrow className='h-4 w-4' />
-            </SmartLink>
           </div>
-          <div className='loonge-life-image'>
+          <SmartLink
+            className='loonge-life-image group'
+            href='/category/生活记录'
+            aria-label='进入生活记录'
+          >
             <LazyImage
               src='/images/loonge-life.png'
               alt='书房与乒乓球桌'
-              className='h-full w-full object-cover'
+              className='h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]'
             />
-          </div>
+          </SmartLink>
         </div>
       </section>
 
@@ -297,7 +317,7 @@ export default function HomePage(props) {
           <SectionHeading
             index='02'
             title='思考'
-            description='思考、研究与实践的记录。'
+            description='把读到的、想到的和做过的事情写下来，沉淀对技术、工作与长期成长的理解。'
             action='查看全部内容'
             href='/archive'
           />
@@ -310,7 +330,7 @@ export default function HomePage(props) {
           <SectionHeading
             index='03'
             title='项目'
-            description='一些正在构建的项目与实践。'
+            description='把想法变成可以使用的东西，记录从问题、设计到实现与复盘的完整过程。'
             action='访问 GitHub'
             href={siteConfig('CONTACT_GITHUB', 'https://github.com/realoong')}
           />
@@ -338,7 +358,7 @@ export default function HomePage(props) {
           <SectionHeading
             index='04'
             title='探索'
-            description='面向未来的长期课题，持续深入与验证。'
+            description='围绕 AI Agent、FDE 与个人知识系统，持续拆解问题、动手验证，并记录阶段性结论。'
           />
           <div className='loonge-exploration-track'>
             {EXPLORATIONS.map(item => (

@@ -3,12 +3,11 @@ import SmartLink from '@/components/SmartLink'
 
 const DEFAULT_LIFE_ENTRY = {
   id: 'homepage-refresh-note',
-  title: '今天，先给自己的小站发条朋友圈',
+  title: '本来想换张照片，最后把首页重做了',
   publishDay: '2026.08.02',
   publishDate: new Date('2026-08-02T12:00:00+08:00').getTime(),
   summary:
-    '今天给个人首页做了次“大扫除”：模块重新排了排，照片换了张顺眼的，连“生活”也单独留了个位置。折腾到最后发现，做网站和收拾房间差不多——本来只想挪个小东西，最后连墙都想刷一遍。以后这里就当我的小朋友圈吧，想到什么记什么，看到什么拍什么，偶尔发点不太正经的碎碎念。先把第一条发出来，给今天留个脚印。',
-  href: '/'
+    '本来只是想给首页换张照片，结果一不小心把整个页面都重新收拾了一遍。导航挪了，照片换了，也终于给“生活”留了个位置。以后这里就当我的小朋友圈，想到什么就记一笔，别管长短。先发第一条，算是给今天的折腾留个证据。'
 }
 
 const getPostTime = post => {
@@ -27,6 +26,20 @@ const getLegacyVideoUrl = post => {
 }
 
 const getPostDate = post => post?.publishDay || post?.lastEditedDay || '最近'
+
+const getEntryHref = post => {
+  if (
+    typeof post?.href === 'string' &&
+    post.href.trim() &&
+    post.href.trim() !== '/'
+  ) {
+    return post.href
+  }
+  if (typeof post?.slug === 'string' && post.slug.trim()) {
+    return `/article/${post.slug}`
+  }
+  return ''
+}
 
 const LifeEntryMedia = ({ post }) => {
   const media = Array.isArray(post?.media) ? post.media : []
@@ -81,6 +94,31 @@ const LifeEntryMedia = ({ post }) => {
   return null
 }
 
+const LifeEntry = ({ post }) => {
+  const href = getEntryHref(post)
+  const title = post.title || '生活记录'
+
+  return (
+    <article className='loonge-life-entry'>
+      <div className='loonge-life-entry-date'>
+        <span>{getPostDate(post)}</span>
+        <i aria-hidden='true' />
+      </div>
+      <div className='loonge-life-entry-card'>
+        <div className='loonge-life-entry-meta'>生活记录</div>
+        <LifeEntryMedia post={post} />
+        <h2>{href ? <SmartLink href={href}>{title}</SmartLink> : title}</h2>
+        <p>{post.summary || '记录此刻的想法与观察。'}</p>
+        {href ? (
+          <SmartLink className='loonge-text-link' href={href}>
+            查看详情
+          </SmartLink>
+        ) : null}
+      </div>
+    </article>
+  )
+}
+
 export default function LifeTimeline({ posts = [] }) {
   const hasDefaultEntry = posts.some(post => post?.id === DEFAULT_LIFE_ENTRY.id)
   const entries = [
@@ -104,33 +142,10 @@ export default function LifeTimeline({ posts = [] }) {
             </div>
           ) : (
             entries.map((post, index) => (
-              <article
+              <LifeEntry
                 key={post.id || post.slug || `${post.title}-${index}`}
-                className='loonge-life-entry'
-              >
-                <div className='loonge-life-entry-date'>
-                  <span>{getPostDate(post)}</span>
-                  <i aria-hidden='true' />
-                </div>
-                <div className='loonge-life-entry-card'>
-                  <div className='loonge-life-entry-meta'>生活记录</div>
-                  <LifeEntryMedia post={post} />
-                  <h2>
-                    <SmartLink
-                      href={post.href || `/article/${post.slug || ''}`}
-                    >
-                      {post.title || '生活记录'}
-                    </SmartLink>
-                  </h2>
-                  <p>{post.summary || '记录此刻的想法与观察。'}</p>
-                  <SmartLink
-                    className='loonge-text-link'
-                    href={post.href || `/article/${post.slug || ''}`}
-                  >
-                    查看详情
-                  </SmartLink>
-                </div>
-              </article>
+                post={post}
+              />
             ))
           )}
         </div>

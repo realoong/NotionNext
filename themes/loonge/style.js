@@ -399,6 +399,15 @@ export const Style = () => (
       letter-spacing: -0.055em;
     }
 
+    .loonge-section-heading-title {
+      display: inline-block;
+      color: inherit;
+    }
+
+    .loonge-section-heading-title:hover h2 {
+      color: var(--loonge-blue);
+    }
+
     .dark .loonge-section-heading h2,
     .dark .loonge-exploration-item h3,
     .dark .loonge-featured h3,
@@ -723,13 +732,14 @@ export const Style = () => (
     }
 
     .loonge-life-copy > p {
-      margin-bottom: 44px;
+      margin-bottom: 0;
       color: var(--loonge-muted);
       font-size: 1.05rem;
       line-height: 2;
     }
 
     .loonge-life-image {
+      display: block;
       height: clamp(320px, 36vw, 500px);
       overflow: hidden;
       border-radius: 12px;

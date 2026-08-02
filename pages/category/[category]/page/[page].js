@@ -2,6 +2,7 @@ import BLOG from '@/blog.config'
 import { siteConfig } from '@/lib/config'
 import { fetchGlobalAllData } from '@/lib/db/SiteDataApi'
 import { enrichLifePosts } from '@/lib/db/notion/getLifePostMedia'
+import { isLifePost } from '@/lib/db/notion/lifeCategories'
 import { DynamicLayout } from '@/themes/theme'
 
 /**
@@ -22,7 +23,11 @@ export async function getStaticProps({ params: { category, page } }) {
   // 过滤状态类型
   props.posts = props.allPages
     ?.filter(page => page.type === 'Post' && page.status === 'Published')
-    .filter(post => post && post.category && post.category.includes(category))
+    .filter(post =>
+      category === '生活记录'
+        ? isLifePost(post)
+        : post && post.category && post.category.includes(category)
+    )
   // 处理文章页数
   props.postCount = props.posts.length
   const POSTS_PER_PAGE = siteConfig('POSTS_PER_PAGE', 12, props?.NOTION_CONFIG)
