@@ -18,7 +18,7 @@ const getPostCategories = post => {
 
 const postHref = post => post?.href || `/article/${post?.slug || ''}`
 
-const ArchiveCard = ({ post }) => (
+const ArchiveCard = ({ post, priority = false }) => (
   <article className='loonge-archive-card'>
     <SmartLink
       href={postHref(post)}
@@ -26,6 +26,7 @@ const ArchiveCard = ({ post }) => (
     >
       {post?.pageCoverThumbnail ? (
         <LazyImage
+          priority={priority}
           src={post.pageCoverThumbnail}
           alt={post.title}
           className='h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]'
@@ -92,8 +93,12 @@ export default function ThinkingArchive({ posts = [] }) {
 
         {visiblePosts.length ? (
           <div className='loonge-archive-grid'>
-            {visiblePosts.map(post => (
-              <ArchiveCard key={post.id || post.slug} post={post} />
+            {visiblePosts.map((post, index) => (
+              <ArchiveCard
+                key={post.id || post.slug}
+                post={post}
+                priority={index < 3}
+              />
             ))}
           </div>
         ) : (

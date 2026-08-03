@@ -289,7 +289,8 @@ export const Style = () => (
       object-position: center 28%;
       /* Use the same rounded corners as the card while covering every edge. */
       border-radius: inherit;
-      filter: grayscale(1) contrast(1.04);
+      /* Keep the portrait natural while gently cooling and softening saturation. */
+      filter: saturate(0.82) contrast(1.04) brightness(0.99);
     }
 
     .loonge-hero-modules {
@@ -757,22 +758,25 @@ export const Style = () => (
     }
 
     .loonge-archive-page,
-    .loonge-directory-page {
-      padding-block: clamp(58px, 7vw, 96px) clamp(72px, 9vw, 128px);
+    .loonge-directory-page,
+    .loonge-life-page {
+      padding-block: clamp(46px, 5vw, 72px) clamp(72px, 8vw, 112px);
     }
 
     .loonge-archive-intro,
-    .loonge-directory-intro {
+    .loonge-directory-intro,
+    .loonge-life-page-intro {
       max-width: 720px;
-      padding-bottom: 42px;
+      padding-bottom: 26px;
     }
 
     .loonge-archive-intro h1,
-    .loonge-directory-intro h1 {
-      margin-top: 10px;
+    .loonge-directory-intro h1,
+    .loonge-life-page-intro h1 {
+      margin-top: 8px;
       color: var(--loonge-ink);
       font-family: var(--loonge-display-font);
-      font-size: clamp(3.8rem, 8vw, 7rem);
+      font-size: clamp(2.4rem, 4vw, 4.2rem);
       line-height: 0.98;
       letter-spacing: -0.06em;
     }
@@ -783,12 +787,13 @@ export const Style = () => (
     }
 
     .loonge-archive-intro p,
-    .loonge-directory-intro p {
+    .loonge-directory-intro p,
+    .loonge-life-page-intro p {
       max-width: 640px;
-      margin-top: 22px;
+      margin-top: 12px;
       color: var(--loonge-muted);
-      font-size: 1.08rem;
-      line-height: 1.85;
+      font-size: 0.95rem;
+      line-height: 1.6;
     }
 
     .loonge-directory-intro .loonge-text-link {
@@ -1062,8 +1067,7 @@ export const Style = () => (
       background: var(--loonge-blue);
     }
 
-    .loonge-about-page,
-    .loonge-life-page {
+    .loonge-about-page {
       padding-block: clamp(72px, 9vw, 132px);
     }
 
@@ -1085,8 +1089,7 @@ export const Style = () => (
       align-items: start;
     }
 
-    .loonge-about-intro,
-    .loonge-life-page-intro {
+    .loonge-about-intro {
       max-width: 760px;
       padding-bottom: clamp(60px, 8vw, 108px);
       border-bottom: 1px solid var(--loonge-line);
@@ -1099,8 +1102,7 @@ export const Style = () => (
       border: 0;
     }
 
-    .loonge-about-intro h1,
-    .loonge-life-page-intro h1 {
+    .loonge-about-intro h1 {
       margin: 12px 0 28px;
       color: var(--loonge-ink);
       font-size: clamp(3.1rem, 7vw, 6.7rem);
@@ -1324,12 +1326,10 @@ export const Style = () => (
       margin-top: 20px;
     }
 
-    .loonge-life-page-intro {
-      max-width: 900px;
-    }
-
     .loonge-life-page-intro p {
       margin-top: 0;
+      font-size: 0.95rem;
+      line-height: 1.6;
     }
 
     .loonge-life-timeline {
@@ -1778,9 +1778,12 @@ export const Style = () => (
         grid-template-columns: 1fr;
       }
 
-      .loonge-about-page,
-      .loonge-life-page {
+      .loonge-about-page {
         padding-block: 58px 72px;
+      }
+
+      .loonge-life-page {
+        padding-block: 42px 72px;
       }
 
       .loonge-about-page {
@@ -1923,23 +1926,27 @@ export const Style = () => (
       }
 
       .loonge-archive-page,
-      .loonge-directory-page {
+      .loonge-directory-page,
+      .loonge-life-page {
         padding-block: 52px 72px;
       }
 
       .loonge-archive-intro,
-      .loonge-directory-intro {
+      .loonge-directory-intro,
+      .loonge-life-page-intro {
         padding-bottom: 32px;
       }
 
       .loonge-archive-intro h1,
-      .loonge-directory-intro h1 {
-        font-size: clamp(3.5rem, 18vw, 5.4rem);
+      .loonge-directory-intro h1,
+      .loonge-life-page-intro h1 {
+        font-size: clamp(2.8rem, 13vw, 4rem);
       }
 
       .loonge-archive-intro p,
-      .loonge-directory-intro p {
-        font-size: 1rem;
+      .loonge-directory-intro p,
+      .loonge-life-page-intro p {
+        font-size: 0.95rem;
       }
 
       .loonge-archive-toolbar {
