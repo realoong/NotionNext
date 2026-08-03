@@ -33,6 +33,9 @@ import { SVG404 } from './components/svg/SVG404'
 import HomePage from './components/HomePage'
 import AboutPage from './components/AboutPage'
 import LifeTimeline from './components/LifeTimeline'
+import ThinkingArchive from './components/ThinkingArchive'
+import ProjectsPage from './components/ProjectsPage'
+import ExplorationPage from './components/ExplorationPage'
 
 /**
  * 布局框架
@@ -207,12 +210,11 @@ const LayoutSearch = props => {
  * @param {*} props
  * @returns
  */
-const LayoutArchive = props => (
-  <>
-    {/* 博文列表 */}
-    <Blog {...props} />
-  </>
-)
+const LayoutArchive = props => <ThinkingArchive {...props} />
+
+const LayoutProjects = () => <ProjectsPage />
+
+const LayoutExploration = () => <ExplorationPage />
 
 /**
  * 404页面
@@ -499,6 +501,8 @@ export {
   LayoutDashboard,
   LayoutIndex,
   LayoutPostList,
+  LayoutProjects,
+  LayoutExploration,
   LayoutSearch,
   LayoutSignIn,
   LayoutSignUp,

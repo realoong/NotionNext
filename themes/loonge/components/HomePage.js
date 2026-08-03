@@ -2,75 +2,7 @@ import LazyImage from '@/components/LazyImage'
 import SmartLink from '@/components/SmartLink'
 import { siteConfig } from '@/lib/config'
 import CONFIG from '../config'
-
-const MODULES = [
-  {
-    number: '01',
-    title: '生活',
-    text: '记录运动、阅读与日常观察，留下真实的生活片段。',
-    href: '/category/生活记录'
-  },
-  {
-    number: '02',
-    title: '思考',
-    text: '记录阅读、研究与实践中的想法和判断。',
-    href: '#featured'
-  },
-  {
-    number: '03',
-    title: '项目',
-    text: '把想法做成可以使用的项目与工具。',
-    href: '#projects'
-  },
-  {
-    number: '04',
-    title: '探索',
-    text: '持续跟进 AI Agent、FDE 与知识系统。',
-    href: '#exploration'
-  }
-]
-
-const EXPLORATIONS = [
-  {
-    number: '01',
-    title: 'AI Agent',
-    status: '探索中',
-    text: '从模型能力到 Agent 系统，探索 AI 真正落地的方式。',
-    href: '/tag/AI Agent'
-  },
-  {
-    number: '02',
-    title: 'FDE',
-    status: '研究中',
-    text: '研究 Forward Deployed Engineer 模式，以及 AI 时代工程角色的变化。',
-    href: '/tag/FDE'
-  },
-  {
-    number: '03',
-    title: 'Personal Knowledge System',
-    status: '建设中',
-    text: '连接想法、资料与行动，构建可持续的个人知识与工作系统。',
-    href: '/tag/知识管理'
-  }
-]
-
-const PROJECTS = [
-  {
-    name: 'AI Agent 实践',
-    description: '围绕工具调用、记忆、计划与执行的工程化探索。',
-    href: '/tag/AI Agent'
-  },
-  {
-    name: '个人知识系统',
-    description: '用 AI 连接知识采集、加工、沉淀与复用。',
-    href: '/tag/知识管理'
-  },
-  {
-    name: '工程方法与工具',
-    description: '复杂系统建设中的方法、规范与效率工具。',
-    href: '/category/工程实践'
-  }
-]
+import { EXPLORATIONS, MODULES, PROJECTS } from '../data'
 
 const Arrow = ({ className = '' }) => (
   <svg
@@ -142,16 +74,18 @@ const getPostHref = post => post?.href || `/article/${post?.slug || ''}`
 
 const getPublishedPosts = pages => {
   if (!Array.isArray(pages)) return []
-  return pages.filter(
-    page =>
-      page &&
-      (!page.type || page.type === 'Post') &&
-      (!page.status || page.status === 'Published')
-  )
+  return pages
+    .filter(
+      page =>
+        page &&
+        (!page.type || page.type === 'Post') &&
+        (!page.status || page.status === 'Published')
+    )
+    .sort((a, b) => (b.publishDate || 0) - (a.publishDate || 0))
 }
 
 const FeaturedContent = ({ posts }) => {
-  const featured = posts.slice(0, 3)
+  const featured = posts.slice(0, 4)
 
   if (!featured.length) {
     return (
@@ -259,7 +193,7 @@ export default function HomePage(props) {
                 className='loonge-button loonge-button-primary'
                 href='/about'
               >
-                了解我
+                关于我
               </SmartLink>
               <SmartLink
                 className='loonge-button loonge-button-secondary'
@@ -318,7 +252,7 @@ export default function HomePage(props) {
             index='02'
             title='思考'
             description='把读到的、想到的和做过的事情写下来，沉淀对技术、工作与长期成长的理解。'
-            action='查看全部内容'
+            action='查看全部思考'
             href='/archive'
           />
           <FeaturedContent posts={posts} />
@@ -331,14 +265,14 @@ export default function HomePage(props) {
             index='03'
             title='项目'
             description='把想法变成可以使用的东西，记录从问题、设计到实现与复盘的完整过程。'
-            action='访问 GitHub'
-            href={siteConfig('CONTACT_GITHUB', 'https://github.com/realoong')}
+            action='查看全部项目'
+            href='/projects'
           />
           <div className='loonge-project-list'>
             {PROJECTS.map((project, index) => (
               <SmartLink
                 key={project.name}
-                href={project.href}
+                href={`/projects#project-${project.id}`}
                 className='loonge-project-row'
               >
                 <span className='loonge-project-mark'>
@@ -359,12 +293,14 @@ export default function HomePage(props) {
             index='04'
             title='探索'
             description='围绕 AI Agent、FDE 与个人知识系统，持续拆解问题、动手验证，并记录阶段性结论。'
+            action='查看全部探索'
+            href='/exploration'
           />
           <div className='loonge-exploration-track'>
             {EXPLORATIONS.map(item => (
               <SmartLink
                 key={item.number}
-                href={item.href}
+                href={`/exploration#exploration-${item.id}`}
                 className='loonge-exploration-item'
               >
                 <div className='loonge-track-number'>{item.number}</div>

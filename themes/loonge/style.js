@@ -370,7 +370,7 @@ export const Style = () => (
     }
 
     .loonge-section {
-      padding-block: clamp(56px, 6vw, 88px);
+      padding-block: clamp(42px, 4.5vw, 68px);
       border-bottom: 1px solid var(--loonge-line);
     }
 
@@ -387,7 +387,7 @@ export const Style = () => (
       align-items: flex-end;
       justify-content: space-between;
       gap: 32px;
-      margin-bottom: 48px;
+      margin-bottom: 32px;
     }
 
     .loonge-section-heading h2 {
@@ -478,7 +478,7 @@ export const Style = () => (
     }
 
     .loonge-exploration {
-      padding-block: 56px 68px;
+      padding-block: 48px 56px;
       background: #fafbfd;
     }
 
@@ -689,7 +689,7 @@ export const Style = () => (
     }
 
     .loonge-projects {
-      padding-block: 84px;
+      padding-block: 52px 60px;
     }
 
     .loonge-project-list {
@@ -728,7 +728,7 @@ export const Style = () => (
     }
 
     .loonge-life-copy .loonge-section-heading {
-      margin-bottom: 30px;
+      margin-bottom: 24px;
     }
 
     .loonge-life-copy > p {
@@ -744,6 +744,292 @@ export const Style = () => (
       overflow: hidden;
       border-radius: 12px;
       background: var(--loonge-soft);
+    }
+
+    .loonge-archive-page,
+    .loonge-directory-page {
+      padding-block: clamp(58px, 7vw, 96px) clamp(72px, 9vw, 128px);
+    }
+
+    .loonge-archive-intro,
+    .loonge-directory-intro {
+      max-width: 720px;
+      padding-bottom: 42px;
+    }
+
+    .loonge-archive-intro h1,
+    .loonge-directory-intro h1 {
+      margin-top: 10px;
+      color: var(--loonge-ink);
+      font-family: var(--loonge-display-font);
+      font-size: clamp(3.8rem, 8vw, 7rem);
+      line-height: 0.98;
+      letter-spacing: -0.06em;
+    }
+
+    .dark .loonge-archive-intro h1,
+    .dark .loonge-directory-intro h1 {
+      color: #fff;
+    }
+
+    .loonge-archive-intro p,
+    .loonge-directory-intro p {
+      max-width: 640px;
+      margin-top: 22px;
+      color: var(--loonge-muted);
+      font-size: 1.08rem;
+      line-height: 1.85;
+    }
+
+    .loonge-directory-intro .loonge-text-link {
+      margin-top: 26px;
+    }
+
+    .loonge-archive-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding-block: 18px;
+      border-top: 1px solid var(--loonge-line);
+      border-bottom: 1px solid var(--loonge-line);
+    }
+
+    .loonge-archive-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .loonge-archive-filters button {
+      padding: 8px 14px;
+      color: var(--loonge-muted);
+      border: 1px solid transparent;
+      border-radius: 999px;
+      background: transparent;
+      font-size: 0.86rem;
+      cursor: pointer;
+      transition:
+        color 180ms ease,
+        background 180ms ease,
+        border-color 180ms ease;
+    }
+
+    .loonge-archive-filters button:hover,
+    .loonge-archive-filters button.active {
+      color: var(--loonge-blue);
+      border-color: #c9d8f8;
+      background: #eef4ff;
+    }
+
+    .dark .loonge-archive-filters button:hover,
+    .dark .loonge-archive-filters button.active {
+      border-color: #314a7c;
+      background: #18233a;
+    }
+
+    .loonge-archive-count {
+      flex: 0 0 auto;
+      color: var(--loonge-muted);
+      font-size: 0.86rem;
+    }
+
+    .loonge-archive-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 28px;
+      padding-top: 32px;
+    }
+
+    .loonge-archive-card {
+      overflow: hidden;
+      border: 1px solid var(--loonge-line);
+      background: #fff;
+      transition:
+        border-color 180ms ease,
+        transform 180ms ease,
+        box-shadow 180ms ease;
+    }
+
+    .loonge-archive-card:hover {
+      border-color: #c6d1e0;
+      box-shadow: 0 12px 30px rgba(17, 19, 24, 0.07);
+      transform: translateY(-3px);
+    }
+
+    .dark .loonge-archive-card {
+      border-color: var(--loonge-dark-line);
+      background: var(--loonge-dark-soft);
+    }
+
+    .loonge-archive-card-cover {
+      display: grid;
+      place-items: center;
+      height: 168px;
+      overflow: hidden;
+      color: var(--loonge-blue);
+      background: var(--loonge-soft);
+      font-family: var(--loonge-display-font);
+      font-size: 3.2rem;
+      font-weight: 700;
+    }
+
+    .dark .loonge-archive-card-cover {
+      background: #1b2535;
+    }
+
+    .loonge-archive-card-body {
+      padding: 20px 22px 22px;
+    }
+
+    .loonge-archive-card-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      color: var(--loonge-blue);
+      font-size: 0.78rem;
+      font-weight: 650;
+    }
+
+    .loonge-archive-card-meta time {
+      color: var(--loonge-muted);
+      font-weight: 450;
+    }
+
+    .loonge-archive-card h2 {
+      margin-top: 12px;
+      color: var(--loonge-ink);
+      font-size: 1.2rem;
+      line-height: 1.35;
+      font-weight: 700;
+    }
+
+    .dark .loonge-archive-card h2 {
+      color: #fff;
+    }
+
+    .loonge-archive-card h2 a:hover {
+      color: var(--loonge-blue);
+    }
+
+    .loonge-archive-card p {
+      display: -webkit-box;
+      overflow: hidden;
+      margin-top: 10px;
+      color: var(--loonge-muted);
+      line-height: 1.7;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 3;
+    }
+
+    .loonge-archive-empty,
+    .loonge-directory-note {
+      margin-top: 32px;
+      padding: 26px;
+      color: var(--loonge-muted);
+      border: 1px dashed var(--loonge-line);
+      background: var(--loonge-soft);
+    }
+
+    .loonge-directory-list {
+      border-top: 1px solid var(--loonge-line);
+    }
+
+    .loonge-directory-item {
+      display: grid;
+      grid-template-columns: 72px minmax(0, 1fr) 28px;
+      gap: 30px;
+      align-items: start;
+      padding: 28px 0;
+      border-bottom: 1px solid var(--loonge-line);
+    }
+
+    .loonge-directory-item:hover .loonge-directory-arrow {
+      color: var(--loonge-blue);
+      transform: translateX(4px);
+    }
+
+    .loonge-directory-number {
+      padding-top: 4px;
+      color: var(--loonge-blue);
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    .loonge-directory-item-heading {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .loonge-directory-item h2 {
+      color: var(--loonge-ink);
+      font-size: clamp(1.25rem, 2vw, 1.7rem);
+      line-height: 1.3;
+      font-weight: 730;
+    }
+
+    .dark .loonge-directory-item h2 {
+      color: #fff;
+    }
+
+    .loonge-directory-item-heading > span {
+      flex: 0 0 auto;
+      color: var(--loonge-muted);
+      font-size: 0.82rem;
+    }
+
+    .loonge-directory-main > p {
+      max-width: 760px;
+      margin-top: 10px;
+      color: var(--loonge-muted);
+      line-height: 1.75;
+    }
+
+    .loonge-directory-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    .loonge-directory-tags span {
+      padding: 4px 9px;
+      color: var(--loonge-muted);
+      border: 1px solid var(--loonge-line);
+      border-radius: 999px;
+      font-size: 0.75rem;
+    }
+
+    .loonge-directory-arrow {
+      width: 24px;
+      height: 24px;
+      display: grid;
+      place-items: center;
+      color: var(--loonge-muted);
+      transition:
+        color 180ms ease,
+        transform 180ms ease;
+    }
+
+    .loonge-directory-arrow svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .loonge-exploration-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .loonge-exploration-pill i {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--loonge-blue);
     }
 
     .loonge-about-page,
@@ -1397,16 +1683,16 @@ export const Style = () => (
       }
 
       .loonge-section {
-        padding-block: 58px;
+        padding-block: 42px;
       }
 
       .loonge-exploration {
-        padding-block: 48px 56px;
+        padding-block: 40px 46px;
       }
 
       .loonge-section-heading {
         display: block;
-        margin-bottom: 36px;
+        margin-bottom: 28px;
       }
 
       .loonge-section-heading > .loonge-text-link {
@@ -1604,6 +1890,60 @@ export const Style = () => (
       .loonge-life-image {
         height: 330px;
         order: -1;
+      }
+
+      .loonge-archive-page,
+      .loonge-directory-page {
+        padding-block: 52px 72px;
+      }
+
+      .loonge-archive-intro,
+      .loonge-directory-intro {
+        padding-bottom: 32px;
+      }
+
+      .loonge-archive-intro h1,
+      .loonge-directory-intro h1 {
+        font-size: clamp(3.5rem, 18vw, 5.4rem);
+      }
+
+      .loonge-archive-intro p,
+      .loonge-directory-intro p {
+        font-size: 1rem;
+      }
+
+      .loonge-archive-toolbar {
+        display: block;
+      }
+
+      .loonge-archive-count {
+        display: block;
+        margin-top: 12px;
+      }
+
+      .loonge-archive-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        padding-top: 24px;
+      }
+
+      .loonge-archive-card-cover {
+        height: 190px;
+      }
+
+      .loonge-directory-item {
+        grid-template-columns: 42px minmax(0, 1fr) 24px;
+        gap: 14px;
+        padding-block: 24px;
+      }
+
+      .loonge-directory-item-heading {
+        display: block;
+      }
+
+      .loonge-directory-item-heading > span {
+        display: inline-flex;
+        margin-top: 9px;
       }
 
       .loonge-footer-grid {

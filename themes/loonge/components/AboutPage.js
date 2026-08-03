@@ -2,7 +2,7 @@ import SmartLink from '@/components/SmartLink'
 
 const ABOUT_SECTIONS = [
   {
-    title: '我正在关注什么',
+    title: '我关注的领域',
     items: [
       {
         title: '人工智能',
@@ -30,7 +30,7 @@ export default function AboutPage() {
       <div className='loonge-container loonge-about-layout'>
         <header className='loonge-about-intro'>
           <div className='loonge-index'>ABOUT /</div>
-          <h1>关于龙哥</h1>
+          <h1>关于我</h1>
           <p className='loonge-about-lead'>持续学习，认真实践，保持好奇。</p>
           <p>
             我是龙哥，一名长期在技术与业务交汇处工作的 IT 从业者，来自西安。
