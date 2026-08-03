@@ -2,7 +2,7 @@ import LazyImage from '@/components/LazyImage'
 import SmartLink from '@/components/SmartLink'
 import { siteConfig } from '@/lib/config'
 import CONFIG from '../config'
-import { EXPLORATIONS, MODULES, PROJECTS } from '../data'
+import { MODULES, PRACTICES } from '../data'
 
 const Arrow = ({ className = '' }) => (
   <svg
@@ -177,6 +177,72 @@ const FeaturedContent = ({ posts }) => {
   )
 }
 
+const PracticeContent = () => {
+  const featured = PRACTICES.slice(0, 4)
+  const [lead, ...rest] = featured
+
+  return (
+    <div className='loonge-featured'>
+      <SmartLink
+        className='loonge-featured-lead group'
+        href={`/practice#practice-${lead.id}`}
+      >
+        <div className='loonge-featured-image'>
+          <LazyImage
+            priority
+            src={lead.image}
+            alt={lead.title}
+            className='h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]'
+          />
+        </div>
+        <div className='loonge-featured-copy'>
+          <div className='loonge-meta'>
+            {lead.kind} · {lead.status}
+          </div>
+          <h3>{lead.title}</h3>
+          <p>{lead.description}</p>
+          <div className='loonge-post-foot'>
+            <span>{lead.date}</span>
+            <Arrow className='h-5 w-5' />
+          </div>
+        </div>
+      </SmartLink>
+
+      <div className='loonge-featured-list'>
+        {rest.map(item => (
+          <SmartLink
+            key={item.id}
+            className='loonge-featured-row group'
+            href={`/practice#practice-${item.id}`}
+          >
+            <div className='loonge-featured-thumb'>
+              <LazyImage
+                priority
+                src={item.image}
+                alt={item.title}
+                className='h-full w-full object-cover transition-transform duration-500 group-hover:scale-105'
+              />
+            </div>
+            <div className='min-w-0 flex-1'>
+              <div className='loonge-meta'>
+                {item.kind} · {item.status}
+              </div>
+              <h3>{item.title}</h3>
+              <p className='loonge-featured-row-description'>
+                {item.description}
+              </p>
+              <div className='loonge-post-foot'>
+                <span>{item.date}</span>
+                <Arrow className='h-5 w-5' />
+              </div>
+            </div>
+          </SmartLink>
+        ))}
+      </div>
+    </div>
+  )
+}
+
 export default function HomePage(props) {
   const posts = getPublishedPosts(props?.allNavPages || props?.posts)
 
@@ -197,9 +263,9 @@ export default function HomePage(props) {
               </SmartLink>
               <SmartLink
                 className='loonge-button loonge-button-secondary'
-                href='#exploration'
+                href='#practice'
               >
-                查看探索
+                查看实践
               </SmartLink>
             </div>
           </div>
@@ -259,61 +325,16 @@ export default function HomePage(props) {
         </div>
       </section>
 
-      <section id='projects' className='loonge-section loonge-projects'>
+      <section id='practice' className='loonge-section loonge-featured-section'>
         <div className='loonge-container'>
           <SectionHeading
             index='03'
-            title='项目'
-            description='把想法变成可以使用的东西，记录从问题、设计到实现与复盘的完整过程。'
-            action='查看全部项目'
-            href='/projects'
+            title='实践'
+            description='把项目做出来，也把探索过程留下来，记录真实的尝试、验证和阶段性成果。'
+            action='查看全部实践'
+            href='/practice'
           />
-          <div className='loonge-project-list'>
-            {PROJECTS.map((project, index) => (
-              <SmartLink
-                key={project.name}
-                href={`/projects#project-${project.id}`}
-                className='loonge-project-row'
-              >
-                <span className='loonge-project-mark'>
-                  {String(index + 1).padStart(2, '0')}
-                </span>
-                <h3>{project.name}</h3>
-                <p>{project.description}</p>
-                <Arrow className='h-5 w-5' />
-              </SmartLink>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section id='exploration' className='loonge-section loonge-exploration'>
-        <div className='loonge-container'>
-          <SectionHeading
-            index='04'
-            title='探索'
-            description='围绕 AI Agent、FDE 与个人知识系统，持续拆解问题、动手验证，并记录阶段性结论。'
-            action='查看全部探索'
-            href='/exploration'
-          />
-          <div className='loonge-exploration-track'>
-            {EXPLORATIONS.map(item => (
-              <SmartLink
-                key={item.number}
-                href={`/exploration#exploration-${item.id}`}
-                className='loonge-exploration-item'
-              >
-                <div className='loonge-track-number'>{item.number}</div>
-                <h3>{item.title}</h3>
-                <p>{item.text}</p>
-                <span className='loonge-text-link loonge-exploration-status'>
-                  <span className='loonge-status-dot' aria-hidden='true' />
-                  {item.status}
-                  <Arrow className='h-4 w-4' />
-                </span>
-              </SmartLink>
-            ))}
-          </div>
+          <PracticeContent />
         </div>
       </section>
     </div>

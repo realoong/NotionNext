@@ -8,8 +8,7 @@ const NAV_ITEMS = [
   { title: '首页', href: '/' },
   { title: '生活', href: '/category/生活记录' },
   { title: '思考', href: '/archive' },
-  { title: '项目', href: '/projects' },
-  { title: '探索', href: '/exploration' },
+  { title: '实践', href: '/practice' },
   { title: '关于', href: '/about' }
 ]
 

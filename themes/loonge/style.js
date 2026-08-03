@@ -295,7 +295,7 @@ export const Style = () => (
     .loonge-hero-modules {
       grid-column: 1 / -1;
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       border-top: 1px solid var(--loonge-line);
     }
 
@@ -681,6 +681,16 @@ export const Style = () => (
       font-size: 1.08rem;
     }
 
+    .loonge-featured-row-description {
+      display: -webkit-box;
+      overflow: hidden;
+      margin-top: 8px;
+      color: var(--loonge-muted);
+      line-height: 1.55;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+    }
+
     .loonge-featured-empty {
       display: grid;
       grid-template-columns: 1.25fr 1fr;
@@ -921,6 +931,26 @@ export const Style = () => (
       line-height: 1.7;
       -webkit-box-orient: vertical;
       -webkit-line-clamp: 3;
+    }
+
+    .loonge-archive-card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: 16px;
+    }
+
+    .loonge-archive-card-tags span {
+      padding: 4px 8px;
+      color: var(--loonge-muted);
+      border: 1px solid var(--loonge-line);
+      border-radius: 999px;
+      font-size: 0.72rem;
+      line-height: 1.2;
+    }
+
+    .dark .loonge-archive-card-tags span {
+      border-color: var(--loonge-dark-line);
     }
 
     .loonge-archive-empty,

@@ -34,8 +34,7 @@ import HomePage from './components/HomePage'
 import AboutPage from './components/AboutPage'
 import LifeTimeline from './components/LifeTimeline'
 import ThinkingArchive from './components/ThinkingArchive'
-import ProjectsPage from './components/ProjectsPage'
-import ExplorationPage from './components/ExplorationPage'
+import PracticeArchive from './components/PracticeArchive'
 
 /**
  * 布局框架
@@ -212,9 +211,7 @@ const LayoutSearch = props => {
  */
 const LayoutArchive = props => <ThinkingArchive {...props} />
 
-const LayoutProjects = () => <ProjectsPage />
-
-const LayoutExploration = () => <ExplorationPage />
+const LayoutPractice = props => <PracticeArchive {...props} />
 
 /**
  * 404页面
@@ -496,13 +493,12 @@ const LayoutSignUp = props => {
 export {
   Layout404,
   LayoutArchive,
+  LayoutPractice,
   LayoutBase,
   LayoutCategoryIndex,
   LayoutDashboard,
   LayoutIndex,
   LayoutPostList,
-  LayoutProjects,
-  LayoutExploration,
   LayoutSearch,
   LayoutSignIn,
   LayoutSignUp,
