@@ -5,7 +5,7 @@ const CONFIG = {
   // 110216.xyz V2：首页身份与视觉配置
   LOONGE_HERO_NAME: 'Loong',
   LOONGE_HERO_DESCRIPTION: '持续探索人工智能、工程实践与个人成长之间的连接。',
-  LOONGE_HERO_IMAGE: '/images/loonge-hero-white-shirt.png',
+  LOONGE_HERO_IMAGE: '/images/loonge-hero-color.png',
 
   PROXIO_COLOR_PRIMARY: '#3758f9',
   PROXIO_COLOR_PRIMARY_HOVER: '#1b44c8',

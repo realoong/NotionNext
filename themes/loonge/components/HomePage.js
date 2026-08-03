@@ -228,9 +228,6 @@ const PracticeContent = () => {
                 {item.kind} · {item.status}
               </div>
               <h3>{item.title}</h3>
-              <p className='loonge-featured-row-description'>
-                {item.description}
-              </p>
               <div className='loonge-post-foot'>
                 <span>{item.date}</span>
                 <Arrow className='h-5 w-5' />
@@ -275,7 +272,7 @@ export default function HomePage(props) {
               priority
               src={siteConfig(
                 'LOONGE_HERO_IMAGE',
-                '/images/loonge-hero-white-shirt.png',
+                '/images/loonge-hero-color.png',
                 CONFIG
               )}
               alt='龙哥'
