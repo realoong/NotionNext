@@ -2,7 +2,7 @@ export const MODULES = [
   {
     number: '01',
     title: '生活',
-    text: '记录运动、阅读与日常观察，留下真实的生活片段。',
+    text: '记录日常里的片段、观察和偶尔冒出来的想法。',
     href: '/category/生活记录'
   },
   {

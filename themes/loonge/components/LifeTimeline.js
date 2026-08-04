@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react'
+
 import LazyImage from '@/components/LazyImage'
 import SmartLink from '@/components/SmartLink'
 
@@ -41,62 +43,106 @@ const getEntryHref = post => {
   return ''
 }
 
-const LifeEntryMedia = ({ post }) => {
-  const media = Array.isArray(post?.media) ? post.media : []
+const getPostMedia = post => {
+  const media = Array.isArray(post?.media)
+    ? post.media.filter(
+        item => item?.src && ['image', 'video'].includes(item.type)
+      )
+    : []
+
+  if (media.length) return media.slice(0, 9)
+
   const legacyVideoUrl = getLegacyVideoUrl(post)
-
-  if (media.length) {
-    return (
-      <div className='loonge-life-entry-media'>
-        {media.map((item, index) =>
-          item.type === 'video' ? (
-            <video
-              key={`${item.src}-${index}`}
-              className='loonge-life-entry-video'
-              controls
-              preload='metadata'
-              src={item.src}
-            />
-          ) : (
-            <LazyImage
-              key={`${item.src}-${index}`}
-              src={item.src}
-              alt={post.title || '生活记录'}
-              className='loonge-life-entry-image'
-            />
-          )
-        )}
-      </div>
-    )
-  }
-
-  if (legacyVideoUrl) {
-    return (
-      <video
-        className='loonge-life-entry-video'
-        controls
-        preload='metadata'
-        src={legacyVideoUrl}
-      />
-    )
-  }
+  if (legacyVideoUrl) return [{ type: 'video', src: legacyVideoUrl }]
 
   if (post?.pageCoverThumbnail) {
-    return (
-      <LazyImage
-        src={post.pageCoverThumbnail}
-        alt={post.title || '生活记录'}
-        className='loonge-life-entry-image'
-      />
-    )
+    return [{ type: 'image', src: post.pageCoverThumbnail }]
   }
 
-  return null
+  return []
 }
 
-const LifeEntry = ({ post }) => {
+const LifeEntryMedia = ({ media, title, onOpenImage }) => {
+  if (!media.length) return null
+
+  return (
+    <div
+      className='loonge-life-entry-media'
+      data-count={Math.min(media.length, 9)}
+      aria-label={media.length > 1 ? '生活记录图片' : '生活记录图片预览'}
+    >
+      {media.map((item, index) =>
+        item.type === 'video' ? (
+          <video
+            key={`${item.src}-${index}`}
+            className='loonge-life-entry-video'
+            controls
+            preload='metadata'
+            src={item.src}
+          />
+        ) : (
+          <button
+            key={`${item.src}-${index}`}
+            type='button'
+            className='loonge-life-entry-media-button'
+            onClick={() => onOpenImage(item.src)}
+            aria-label={`查看${title || '生活记录'}图片`}
+          >
+            <LazyImage
+              src={item.src}
+              alt={title || '生活记录'}
+              className='loonge-life-entry-image'
+            />
+          </button>
+        )
+      )}
+    </div>
+  )
+}
+
+const LifeImageLightbox = ({ src, onClose }) => {
+  useEffect(() => {
+    const previousOverflow = document.body.style.overflow
+    const handleKeyDown = event => {
+      if (event.key === 'Escape') onClose()
+    }
+
+    document.body.style.overflow = 'hidden'
+    window.addEventListener('keydown', handleKeyDown)
+
+    return () => {
+      document.body.style.overflow = previousOverflow
+      window.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [onClose])
+
+  return (
+    <div
+      className='loonge-life-lightbox'
+      role='dialog'
+      aria-modal='true'
+      aria-label='查看生活记录图片'
+      onClick={event => {
+        if (event.target === event.currentTarget) onClose()
+      }}
+    >
+      <button
+        type='button'
+        className='loonge-life-lightbox-close'
+        onClick={onClose}
+        aria-label='关闭图片预览'
+      >
+        ×
+      </button>
+      <img src={src} alt='生活记录原图' />
+    </div>
+  )
+}
+
+const LifeEntry = ({ post, onOpenImage }) => {
   const href = getEntryHref(post)
   const title = post.title || '生活记录'
+  const media = getPostMedia(post)
 
   return (
     <article className='loonge-life-entry'>
@@ -105,21 +151,34 @@ const LifeEntry = ({ post }) => {
         <i aria-hidden='true' />
       </div>
       <div className='loonge-life-entry-card'>
-        <div className='loonge-life-entry-meta'>生活记录</div>
-        <LifeEntryMedia post={post} />
-        <h2>{href ? <SmartLink href={href}>{title}</SmartLink> : title}</h2>
-        <p>{post.summary || '记录此刻的想法与观察。'}</p>
-        {href ? (
-          <SmartLink className='loonge-text-link' href={href}>
-            查看详情
-          </SmartLink>
-        ) : null}
+        <div
+          className={`loonge-life-entry-content${
+            media.length ? ' loonge-life-entry-content--with-media' : ''
+          }`}
+        >
+          <div className='loonge-life-entry-copy'>
+            <div className='loonge-life-entry-meta'>生活记录</div>
+            <h2>{href ? <SmartLink href={href}>{title}</SmartLink> : title}</h2>
+            <p>{post.summary || '记录此刻的想法与观察。'}</p>
+            {href ? (
+              <SmartLink className='loonge-text-link' href={href}>
+                查看详情
+              </SmartLink>
+            ) : null}
+          </div>
+          <LifeEntryMedia
+            media={media}
+            title={title}
+            onOpenImage={onOpenImage}
+          />
+        </div>
       </div>
     </article>
   )
 }
 
 export default function LifeTimeline({ posts = [] }) {
+  const [selectedImage, setSelectedImage] = useState('')
   const hasDefaultEntry = posts.some(post => post?.id === DEFAULT_LIFE_ENTRY.id)
   const entries = [
     ...(hasDefaultEntry ? posts : [...posts, DEFAULT_LIFE_ENTRY])
@@ -131,7 +190,7 @@ export default function LifeTimeline({ posts = [] }) {
         <header className='loonge-life-page-intro'>
           <div className='loonge-index'>LIFE /</div>
           <h1>生活</h1>
-          <p>记录运动、阅读，以及那些当下想到的事。</p>
+          <p>记录日常里的片段、观察与偶尔冒出来的想法。</p>
         </header>
 
         <div className='loonge-life-timeline'>
@@ -145,11 +204,18 @@ export default function LifeTimeline({ posts = [] }) {
               <LifeEntry
                 key={post.id || post.slug || `${post.title}-${index}`}
                 post={post}
+                onOpenImage={setSelectedImage}
               />
             ))
           )}
         </div>
       </div>
+      {selectedImage ? (
+        <LifeImageLightbox
+          src={selectedImage}
+          onClose={() => setSelectedImage('')}
+        />
+      ) : null}
     </main>
   )
 }

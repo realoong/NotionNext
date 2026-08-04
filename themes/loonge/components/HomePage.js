@@ -284,28 +284,40 @@ export default function HomePage(props) {
       </section>
 
       <section id='life' className='loonge-section loonge-life'>
-        <div className='loonge-container loonge-life-grid'>
-          <div className='loonge-life-copy'>
-            <SectionHeading
-              index='01'
-              title='生活'
-              titleHref='/category/生活记录'
-            />
-            <p>
-              乒乓球让我保持专注与节奏，阅读让我看见更大的世界，日常观察提醒我保持好奇与真诚。
-            </p>
-          </div>
-          <SmartLink
-            className='loonge-life-image group'
+        <div className='loonge-container'>
+          <SectionHeading
+            index='01'
+            title='生活'
+            titleHref='/category/生活记录'
+            description='记录日常里的片段、观察与偶尔冒出来的想法，给真实生活留个位置。'
+            action='查看生活记录'
             href='/category/生活记录'
-            aria-label='进入生活记录'
-          >
-            <LazyImage
-              src='/images/loonge-life.png'
-              alt='书房与乒乓球桌'
-              className='h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]'
-            />
-          </SmartLink>
+          />
+
+          <div className='loonge-life-grid'>
+            <SmartLink
+              className='loonge-life-image group'
+              href='/category/生活记录'
+              aria-label='进入生活记录'
+            >
+              <LazyImage
+                src='/images/loonge-life.png'
+                alt='书房与乒乓球桌'
+                className='h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]'
+              />
+            </SmartLink>
+            <div className='loonge-life-details'>
+              <div className='loonge-meta'>LIFE LOG / 01</div>
+              <h3>把生活留下来</h3>
+              <p>
+                运动、阅读、工作之外，也记录路过的风景、突然的念头和还没想明白的小事。
+              </p>
+              <SmartLink className='loonge-text-link' href='/category/生活记录'>
+                进入生活记录
+                <Arrow className='h-4 w-4' />
+              </SmartLink>
+            </div>
+          </div>
         </div>
       </section>
 
